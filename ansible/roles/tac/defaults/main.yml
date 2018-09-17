@@ -1,0 +1,94 @@
+---
+
+# app_name, rpm_name and rpm_folder are standard variables, must be redefined for each role
+# it allows re-usage of tasks
+
+app_name:    'Talend TAC'
+rpm_name:    'talend-tac'
+rpm_folder:  'tac'
+app_service: 'talend-tac'
+
+##########################################################################
+# TAC-specific configuration variables
+# We will use "tac_" prefix in var names
+##########################################################################
+
+#####################################
+#
+# ATTENTION: Some variables can be set only for new installation !
+#            They will not affect existing installation !
+#            If one of these needs to be changed, this can be done manually or by removing s/w
+#     Such variables include:
+#            - Tomcat selection variables
+#            - Systemd selection variable
+#            - (TAC-specific) TAC web application name variable
+#
+#####################################
+
+#####
+# Tomcat-selection variables
+#####
+
+# This var shows whether we should use talend-tomcat in 'shared' mode (default settings)
+app_use_talend_tomcat: "yes"      # allowed values are "yes" or "no"
+app_tomcat_port:  "8080"          # tomcat_port is used only if tomcat_setup == "yes" (or when app_use_talend_tomcat == "yes")
+
+# The following variables will be taken in account only if app_use_talend_tomcat == "no"
+app_tomcat_home:  "/opt/tomcat"   # home folder for customer's tomcat
+app_tomcat_mode:  "direct"        # can be one of "direct" or "shared"
+app_tomcat_setup: "no"            # whether to update customer's tomcat configuration (ports)
+
+#####
+# Installation as systemd service
+#####
+app_install_systemd:  "yes"       # allowed values "yes" and "no"
+
+# TAC web-application name, default is org.talend.administrator
+tac_webapp_name: org.talend.administrator
+
+# Internal configuration variables, do not change this block
+#
+tac_config_location: "{{ install_prefix + '/tac/tomcat/webapps/' + tac_webapp_name + '/WEB-INF/classes' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home + '/webapps/' + tac_webapp_name + '/WEB-INF/classes' }}"
+#
+# End of internal configuration variables block
+
+
+#########################################
+#
+# Parameters below can be used for configuration updates (re-configuration) "on the fly"
+#
+#########################################
+# Admin user/password
+tac_admin_user: 'security@company.com'
+tac_admin_pass: 'admin'
+
+# Use SSO ("yes" or "no")
+tac_use_sso: "no"
+
+# LogServer parameters
+tac_use_logserver: "yes"
+tac_logserver_host: "localhost"
+tac_logserver_port: 5044
+
+
+# Database parameters
+# TAC_DATABASE = h2 | mysql | oracle | mssql | postgresql 
+tac_database: "h2"
+
+tac_db_host: 'localhost'
+tac_db_port: '3306'
+tac_db_name: 'talend_administrator'
+tac_db_user: 'talend'
+tac_db_password: 'talend'
+
+# Setup email notifications
+tac_setup_notifications: 'no'
+tac_smtp_server: 'smtp.company.com'
+tac_smtp_port: 25
+tac_smtp_user: 'smtp-user'
+tac_smtp_password: 'smtp-password'
+
+# Install license automatically during installation
+# Note that file must be on a controller host (local file)
+tac_install_license: "no"  # Allowed values 'yes' or 'no'
+tac_license_file:    "/mnt/share/licenses/last.license"

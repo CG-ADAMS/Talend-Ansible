@@ -1,0 +1,182 @@
+---
+
+# This script used for updating current application parameters if the application is already installed
+# It can be run just after the installation or after some time (re-configuration)
+# Some parameters cannot be re-configured (installation path, user, group, tomcat deployment, systemd status)
+# All other parameters must be reconfigured here
+
+# Update admin user/password
+
+- name: Update TAC admin user
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  'install\.defaultaccount\.login=.*'
+    replace: 'install.defaultaccount.login={{ tac_admin_user }}'
+
+- name: Update TAC admin password
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  'install\.defaultaccount\.password=.*'
+    replace: 'install.defaultaccount.password={{ tac_admin_pass }}'
+
+- name: Update SSO status
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  'sso\.field\.useSSOLogin=.*'
+    replace: "sso.field.useSSOLogin={{ 'true' if tac_use_sso == 'yes' else 'false' }}"
+
+#
+# Work with LogServer (Filebeat)
+#
+- name: Create logs folder for Filebeat
+  when: tac_use_logserver == 'yes'
+  file:
+    path: "{{ install_prefix }}/tac/logs"
+    state: directory
+    owner: "{{ install_user }}"
+    group: "{{ install_group }}"
+    mode: 0755
+
+- name: Update Filebeat config for talendAppender
+  lineinfile:
+    path: "{{ tac_config_location }}/configuration.properties"
+    line: "log4j.path.talendAppender={{ install_prefix }}/tac/logs/technical.log"
+    create: yes
+
+- name: Update Filebeat config for businessLog
+  lineinfile:
+    path: "{{ tac_config_location }}/configuration.properties"
+    line: "businessLog.path={{ install_prefix }}/tac/logs/business.log"
+    create: yes
+
+#
+# Update database parameters
+#
+
+# For H2 database
+- name: Update DB URL for H2 database
+  when: tac_database == "h2"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.url=.*'
+    replace: "database.url=jdbc:h2:{0}/WEB-INF/database/talend_administrator;MV_STORE=FALSE;MVCC=TRUE;AUTO_SERVER=TRUE;lock_timeout=15000"
+
+- name: Update DB Driver for H2 database
+  when: tac_database == "h2"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.driver=.*'
+    replace: "database.driver=org.h2.Driver"
+
+- name: Update DB User name for H2 database
+  when: tac_database == "h2"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.username=.*'
+    replace: "database.username=tisadmin"
+
+- name: Update DB User name for H2 database
+  when: tac_database == "h2"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.password=.*'
+    replace: "database.password=tisadmin"
+
+#
+# For MySQL database
+#
+- name: Update DB URL for MySQL database
+  when: tac_database == "mysql"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.url=.*'
+    replace: "database.url=jdbc:mysql://{{ tac_db_host }}:{{ tac_db_port }}/{{ tac_db_name }}"
+
+- name: Update DB Driver for MySQL database
+  when: tac_database == "mysql"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.driver=.*'
+    replace: "database.driver=org.gjt.mm.mysql.Driver"
+
+- name: Update DB User name for not H2 database
+  when: tac_database != "h2"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.username=.*'
+    replace: "database.username={{ tac_db_user }}"
+
+- name: Update DB User name for not H2 database
+  when: tac_database != "h2"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.password=.*'
+    replace: "database.password={{ tac_db_password }}"
+
+#
+# For Oracle database
+#
+- name: Update DB URL for Oracle database
+  when: tac_database == "oracle"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.url=.*'
+    replace: "database.url=jdbc:oracle:thin:@{{ tac_db_host }}:{{ tac_db_port }}:{{ tac_db_name }}"
+
+- name: Update DB Driver for Oracle database
+  when: tac_database == "oracle"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.driver=.*'
+    replace: "database.driver=oracle.jdbc.driver.OracleDriver"
+
+#
+# For PostgreSQL
+#
+- name: Update DB URL for PostgreSQL database
+  when: tac_database == "postgresql"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.url=.*'
+    replace: "database.url=jdbc:postgresql://{{ tac_db_host }}:{{ tac_db_port }}/{{ tac_db_name }}"
+
+- name: Update DB Driver for PostgreSQL database
+  when: tac_database == "postgresql"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.driver=.*'
+    replace: "database.driver=org.postgresql.Driver"
+
+#
+# For Microsoft SQL
+#
+- name: Update DB URL for Microsoft SQL database
+  when: tac_database == "mssql"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.url=.*'
+    replace: "database.url=jdbc:jtds:sqlserver://{{ tac_db_host }}:{{ tac_db_port }}/{{ tac_db_name }}"
+
+- name: Update DB Driver for Microsoft SQL database
+  when: tac_database == "mssql"
+  replace:
+    path: "{{ tac_config_location }}/configuration.properties"
+    regexp:  '^database\.driver=.*'
+    replace: "database.driver=net.sourceforge.jtds.jdbc.Driver"
+
+##
+##  Setup e-mail notifications
+##
+
+# Code from Platform installer does not actually work, so it has no sense to use it here.
+
+
+#
+# Install license automatically during installation
+#
+- name: Install license to TAC
+  when: tac_install_license == 'yes' and rpm_is_installed.stdout == ''  # This will be executed only on new installation
+  lineinfile:
+    path: "{{ tac_config_location }}/install.txt"
+    line: "license.key={{ lookup( 'file', tac_license_file ) }}"
+    create: yes

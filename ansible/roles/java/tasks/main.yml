@@ -1,0 +1,13 @@
+---
+- name: Install Java 1.8
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+     - java-1.8.0-openjdk
+
+- name: Update JAVA_HOME for root user
+  lineinfile:
+    path: '/root/.bashrc'
+    line: 'export JAVA_HOME=$(dirname $(dirname $(readlink -e /usr/bin/java)))'
+    create: yes

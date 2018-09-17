@@ -1,0 +1,36 @@
+---
+# tasks file for java
+- debug:
+    msg: "Install/Upgrade of the Talend Jobserver"
+- name: Java has been upgraded
+  command: echo 0
+  register: contents
+  notify: "restart talend-jobserver"
+  when: (java_upgraded.changed)
+- name: Copy RPM file to server
+  copy:
+    src: "talend-jobserver-7.0.1-1.x86_64.rpm"
+    dest: "/tmp/"
+    mode: 0644
+- name: Install RPM
+  yum:
+    name: "/tmp/talend-jobserver-7.0.1-1.x86_64.rpm"
+    state: present
+- name: Remove JobServer RPM
+  file:
+    state: absent
+    path: "/tmp/*"
+- name: install jobserver systemd unit file
+  template:
+    src: "talend-jobserver.service"
+    dest: /etc/systemd/system/talend-jobserver.service
+    mode: 0644
+- name: copy configuration files to jobserver
+  template:
+    src: "TalendJobServer.properties"
+    dest: "/opt/talend/jobserver/conf/"
+    mode: 0644
+  become: yes
+  notify: "restart talend-jobserver"
+- debug:
+    msg: "The Jobserver has been installed. The command port is {{ command_server_port }}, the file port is {{ file_server_port }} and the monitoring port is {{ monitoring_port }}"

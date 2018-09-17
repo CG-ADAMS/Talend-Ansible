@@ -1,0 +1,82 @@
+---
+# defaults file for jobserver
+run_as_user: root
+
+# TalendJobserver.properties
+
+
+# each second, files are checked. This value determines how many check are needed to ensure file is completely copied into directory
+checkFileCountBeforeFire: 10
+
+### Define ports
+# the port used to launch talend commands
+command_server_port: 8000
+
+# the port for the file transfert
+file_server_port: 8001
+
+# The port used for monitoring the servers state
+monitoring_port: 8888
+
+# The local hostname of this server (default value is "localhost")
+local_host: localhost
+
+# Use SSL (Secure Sockets Layer) for establishing an encrypted link between the JobServer and its clients
+use_ssl: false
+
+# Disabled SSL cipher suites(Java standard cipher suite names separated by a comma ',').If not set,all the supported ciphers will be enabled
+disabled_cipher_suites: 
+
+# Allow specified OS users (separated by a comma ',') to start jobs. If commented or empty, all users are allowed. Wilcard is allowed. Example: RUN_AS_WHITELIST=myuser1,this.super-user, sub-user2,userprod*
+run_as_whitelist: 
+
+# Ensure that undesired instructions are not inserted in the user name variable.
+run_as_user_validation_regexp: ^[a-z][-a-z0-9]*\$
+
+# For remote monitoring and management (e.g. using jconsole) set the following port equal to the
+# org.talend.remote.jobserver.server.TalendJobServerMain.MONITORING_PORT
+# com.sun.management.jmxremote.port=8888
+
+# list of partitions for this server separated by commas
+#org.talend.monitoring.jmx.server.OsInfoRetriever.OS_PARTITIONS=/,/dev,/home
+# e.g. for windows
+#org.talend.monitoring.jmx.server.OsInfoRetriever.OS_PARTITIONS=C:,D:
+
+# The directory path to the Talend jobserver files
+root_path: "./TalendJobServersFiles"
+#ROOT_PATH=C:\\TalendJobServersFiles
+
+# Set to "true" in order to force the load of the native library. This should be used only for testing the native library.
+# The value for production use should be "false". Do not change it if you are not sure about the consequences.
+force_load: false
+
+# Set the shell which launches the jobs, WARNING: enable these properties prevent to kill a job properly
+launch_shell_script: false
+#SHELL_WINDOWS=
+shell_windows:
+#SHELL_LINUX=/bin/sh
+shell_linux: /bin/sh
+
+# Set the maximum of concurrent connections to the JobServer
+max_concurrent_connections: 1000
+
+# Set the executable path of the binary which will run the job, for example: /usr/bin/java/java or "c:\\Program Files\\Java\\bin\\java.exe"
+job_launcher_path: 
+
+# Time in seconds between each cleaning action, set with 0 to disable all cleanings
+frequency_clean_action: 600
+
+# Time in seconds before cleaning executions logs from the current date, 3 months=3*30*24*60*60=7776000, set with 0 to disable delete action with this method
+max_duration_before_cleaning_old_executions_logs: 7776000
+# Max executions logs to keep, set with 0 to disable delete action with this method.
+max_old_executions_logs: 1000
+# Time in seconds before cleaning archives and deployed jobs from the current date, 3 months=3*30*24*60*60=7776000, set with 0 to disable delete action with this method
+max_duration_before_cleaning_old_jobs: 7776000
+# Max archive and deployed jobs to keep, set with 0 to disable delete action with this method.
+max_old_jobs: 200
+
+# Time in seconds before cleaning cached libs from the current date, 3 months=3*30*24*60*60=7776000, set with 0 to disable delete action with this method
+max_duration_before_cleaning_old_libs: 7776000
+# Max cached libs to keep, set with 0 to disable delete action with this method.
+max_old_libs: 300
+

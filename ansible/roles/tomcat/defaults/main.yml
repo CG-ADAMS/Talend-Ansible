@@ -1,0 +1,13 @@
+---
+# app_name and rpm_name are standard variables, must be redefined for each role
+# it allows re-usage of tasks
+
+app_name: 'Talend Tomcat'
+rpm_name: 'talend-tomcat'
+
+
+
+# For talend-tomcat package, we need to redefine package URL
+#     because tomcat version is different from Talend package version
+
+tomcat_rpm_pkg_version: 9.0.10-1
