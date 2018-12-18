@@ -9,6 +9,7 @@
   args:
     warn: no
   register: rpm_is_installed
+  changed_when: false
 
 - name: "Get actual installation prefix for {{ app_name }}"
   when: rpm_is_installed.stdout != ''
@@ -16,6 +17,7 @@
   args:
     warn: no
   register: rpm_install_path
+  changed_when: false
 
 - name: "Show error if {{ app_name }} is already installed with a different prefix"
   fail:
@@ -27,7 +29,8 @@
   stat:
     path: "{{ install_prefix }}/{{ rpm_folder }}/install.params"
   register: inst_params_status
-  
-- fail:
+
+- name: "Show error about corrupted installation for {{ app_name }}"
+  fail:
     msg: "Installation of {{ app_name }} is broken ! File install.params is missing in {{ install_prefix }}/{{ rpm_folder }}"
   when: rpm_is_installed.stdout != '' and not inst_params_status.stat.exists

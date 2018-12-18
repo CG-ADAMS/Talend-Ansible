@@ -13,4 +13,6 @@
 
 - name: "Stop systemd service for {{ app_service }}"
   when: systemd_service_file.stat.exists
-  shell: "systemctl stop {{ app_service }}.service"
+  systemd:
+    name: "{{ app_service }}.service"
+    state: stopped

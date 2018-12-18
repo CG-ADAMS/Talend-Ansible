@@ -9,6 +9,7 @@
   args:
     warn: no
   when: app_use_talend_tomcat == "yes"
+  changed_when: false
   register: tomcat_rpm_status
 
 - name: Check that talend-tomcat is installed
@@ -22,6 +23,7 @@
   args:
     warn: no
   when: app_use_talend_tomcat == "yes"
+  changed_when: false
   register: talend_tomcat_install_path
 
 - name: Check that talend-tomcat is installed in correct location

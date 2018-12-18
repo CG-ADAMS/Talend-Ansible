@@ -15,4 +15,6 @@
 
 - name: "Start systemd service {{ app_service }}"
   when: systemd_service_file.stat.exists
-  shell: "systemctl start {{ app_service }}.service"
+  systemd:
+    name: "{{ app_service }}.service"
+    state: started

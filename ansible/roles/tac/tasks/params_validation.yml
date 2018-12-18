@@ -5,18 +5,22 @@
 # TAC-specific parameters validation
 ######################################
 
-- fail:
+- name: Show error about wrong value for parameter tac_use_sso
+  fail:
     msg: Wrong value for parameter "tac_use_sso", must be 'yes' or 'no'
   when: tac_use_sso != "no" and tac_use_sso != "yes"
 
-- fail:
+- name: Show error about wrong value for parameter tac_use_logserver
+  fail:
     msg: Wrong value for parameter "tac_use_logserver", must be 'yes' or 'no'
   when: tac_use_logserver != "no" and tac_use_logserver != "yes"
 
-- fail:
+- name: Show error about wrong value for parameter tac_database
+  fail:
     msg: Wrong value for parameter "tac_database", must be one of 'h2', 'mysql', 'oracle', 'mssql', 'postgresql'
   when: tac_database != "h2" and tac_database != "mysql" and tac_database != "oracle" and tac_database != "mssql" and tac_database != "postgresql"
 
-- fail:
+- name: Show error about wrong value for parameter tac_setup_notifications
+  fail:
     msg: Wrong value for parameter "tac_setup_notifications", must be 'yes' or 'no'
   when: tac_setup_notifications != "no" and tac_setup_notifications != "yes"
