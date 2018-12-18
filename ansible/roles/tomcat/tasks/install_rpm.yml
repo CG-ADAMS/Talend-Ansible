@@ -18,7 +18,8 @@
 
 - name: "{{ app_name }} RPM is already installed with correct path"
   when: install_prefix != '/opt/talend' and rpm_is_installed.stdout != '' and rpm_install_path.stdout == install_prefix
-  shell: echo "{{ app_name }} RPM is already installed"
+  debug:
+    msg: "{{ app_name }} RPM is already installed"
 
 - name: "Check if {{ app_name }} RPM is already installed into other path"
   fail:
@@ -33,4 +34,3 @@
   environment:
     TALEND_INSTALL_USER: '{{ install_user }}'
     TALEND_INSTALL_GROUP: '{{ install_group }}'
-    
