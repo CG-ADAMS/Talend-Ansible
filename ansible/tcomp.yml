@@ -1,0 +1,6 @@
+---
+- hosts: tcomp-group
+  remote_user: root
+  roles:
+    - talend-repo
+    - tcomp
