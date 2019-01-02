@@ -68,7 +68,7 @@
   when: mdm_database != "h2"
   copy:
     src: "{{ mdm_db_driver }}"
-    dest: "{{ install_prefix + '/' + rpm_folder + '/apache-tomcat/lib/' + mdm_database + '.driver.jar' }}"
+    dest: "{{ install_prefix + '/' + rpm_folder + '/tomcat/lib/' + mdm_database + '.driver.jar' }}"
     owner: root
     group: root
     mode: 0644
