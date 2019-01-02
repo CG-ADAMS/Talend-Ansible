@@ -83,55 +83,41 @@
     regexp:  '^db\.default\.datasource=.*'
     replace: "db.default.datasource=H2-Default"
 
-- name: Update H2 DB Driver
+- name: Update H2 Master&Staging URL
   when: mdm_database == "h2"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdriverclassh2\$\$'
-    replace: "org.h2.Driver"
+    regexp:  'jdbc:h2:///opt/talend/mdm/data/h2-Default/\${container}'
+    replace: "jdbc:h2://{{ install_prefix }}/{{ rpm_folder }}/data/h2-default/{{ mdm_db_name }}"
+    
+- name: Update H2 System URL
+  when: mdm_database == "h2"
+  replace:
+    path: "{{ mdm_config_location }}/datasources.xml"
+    regexp:  'jdbc:h2:///opt/talend/mdm/data/h2-Default/TMDM_DB_SYSTEM'
+    replace: "jdbc:h2://{{ install_prefix }}/{{ rpm_folder }}/data/h2-default/TMDM_DB_SYSTEM"
     
 - name: Update H2 DB User
   when: mdm_database == "h2"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdbuserh2\$\$'
-    replace: "{{ mdm_db_user }}"
+    regexp:  "<connection-username>system</connection-username>"
+    replace: "<connection-username>{{ mdm_db_user }}</connection-username>"
     
 - name: Update H2 DB Password
   when: mdm_database == "h2"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdbpasswordh2\$\$'
-    replace: "{{ mdm_db_password }}"
+    regexp:  "<connection-password></connection-password>"
+    replace: "<connection-password>{{ mdm_db_password }}</connection-password>"
     
 - name: Update H2 Fulltext Index Directory
   when: mdm_database == "h2"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmsearchindexdirh2\$\$'
+    regexp:  '/opt/talend/mdm/data/h2-Default/index'
     replace: "{{ mdm_search_index_dir }}"
     
-- name: Update H2 Master URL
-  when: mdm_database == "h2"
-  replace:
-    path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdburlh2\$\$_MASTER'
-    replace: "jdbc:h2://{{ install_prefix }}/mdm/data/h2-default/{{ mdm_db_name }}_MASTER;DB_CLOSE_ON_EXIT=FALSE"
-    
-- name: Update H2 Staging URL
-  when: mdm_database == "h2"
-  replace:
-    path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdburlh2\$\$_STAGING'
-    replace: "jdbc:h2://{{ install_prefix }}/mdm/data/h2-default/{{ mdm_db_name }}_STAGING;DB_CLOSE_ON_EXIT=FALSE"
-
-- name: Update H2 System URL
-  when: mdm_database == "h2"
-  replace:
-    path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdbsmallurlh2\$\$/TMDM_DB_SYSTEM'
-    replace: "jdbc:h2://{{ install_prefix }}/mdm/data/h2-default/TMDM_DB_SYSTEM;DB_CLOSE_ON_EXIT=FALSE"
-
 #
 # For MySQL8/MySQL database
 #
@@ -174,7 +160,7 @@
   when: mdm_database == "mysql8" or mdm_database == "mysql"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdbpasswordh2\$\$'
+    regexp:  '\$\$mdmdbpasswordmysql\$\$'
     replace: "{{ mdm_db_password }}"
     
 - name: Update MySQL8/MySQL Fulltext Index Directory
@@ -309,7 +295,7 @@
   when: mdm_database == "mssql"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdriverclassoracle\$\$'
+    regexp:  '\$\$mdmdriverclasssqlserver\$\$'
     replace: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
     
 - name: Update MSSQL DB URL
@@ -427,7 +413,7 @@
   when: mdm_database == "db2"
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
-    regexp:  '\$\$mdmdriverclassoracle\$\$'
+    regexp:  '\$\$mdmdriverclassdb2\$\$'
     replace: "com.ibm.db2.jcc.DB2Driver"
     
 - name: Update DB2 DB URL
