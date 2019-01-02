@@ -67,7 +67,7 @@
 - name: Copy DB Driver
   when: mdm_database != "h2"
   copy:
-    src: {{ mdm_db_driver }}
+    src: "{{ mdm_db_driver }}"
     dest: "{{ install_prefix + '/' + rpm_folder + '/apache-tomcat/lib/' + mdm_database + '.driver.jar' }}"
     owner: root
     group: root
