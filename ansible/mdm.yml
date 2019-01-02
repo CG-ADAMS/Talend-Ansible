@@ -1,8 +1,8 @@
 ---
-- hosts: tac-group
+- hosts: mdm-group
   remote_user: root
   roles:
     - java
     - talend-repo
     - tomcat
-    - tac
+    - mdm
