@@ -17,7 +17,5 @@ app_install_systemd:  "yes"       # allowed values "yes" and "no"
 # Parameters below can be used for configuration updates (re-configuration) "on the fly"
 #
 #########################################
-# Admin user/password
-tcomp_admin_user: ''
-tcomp_admin_pass: ''
 
+tcomp_server_port: '8989'
