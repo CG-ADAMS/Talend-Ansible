@@ -397,7 +397,7 @@
   replace:
     path: "{{ mdm_config_location }}/datasources.xml"
     regexp:  '\$\$mdmdbsmallurlpostgressql\$\$'
-    replace: "jdbc:sqlserver://{{ mdm_db_host }}:{{ mdm_db_port }}"
+    replace: "jdbc:postgresql://{{ mdm_db_host }}:{{ mdm_db_port }}"
     
 #
 # For DB2
