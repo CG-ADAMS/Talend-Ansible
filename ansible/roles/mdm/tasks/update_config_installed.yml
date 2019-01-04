@@ -69,10 +69,46 @@
     group: root
     mode: 0644
 
+- name: Copy DB Driver Extra1 (talend tomcat)
+  when: mdm_database == "db2" and mdm_db_driver_extra1 != "" and app_use_talend_tomcat == "yes"
+  copy:
+    src: "{{ mdm_db_driver_extra1 }}"
+    dest: "{{ install_prefix + '/' + rpm_folder + '/tomcat/lib' }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy DB Driver Extra2 (talend tomcat)
+  when: mdm_database == "db2" and mdm_db_driver_extra2 != "" and app_use_talend_tomcat == "yes"
+  copy:
+    src: "{{ mdm_db_driver_extra2 }}"
+    dest: "{{ install_prefix + '/' + rpm_folder + '/tomcat/lib' }}"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Copy DB Driver (other tomcat)
   when: mdm_database != "h2" and app_use_talend_tomcat == "no"
   copy:
     src: "{{ mdm_db_driver }}"
+    dest: "{{ app_tomcat_home + '/lib' }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy DB Driver Extra1 (other tomcat)
+  when: mdm_database == "db2" and mdm_db_driver_extra1 != "" and app_use_talend_tomcat == "no"
+  copy:
+    src: "{{ mdm_db_driver_extra1 }}"
+    dest: "{{ app_tomcat_home + '/lib' }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy DB Driver Extra2 (other tomcat)
+  when: mdm_database == "db2" and mdm_db_driver_extra2 != "" and app_use_talend_tomcat == "no"
+  copy:
+    src: "{{ mdm_db_driver_extra2 }}"
     dest: "{{ app_tomcat_home + '/lib' }}"
     owner: root
     group: root
