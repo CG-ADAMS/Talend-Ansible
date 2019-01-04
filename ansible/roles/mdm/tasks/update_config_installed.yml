@@ -58,20 +58,29 @@
     replace: "appender.http.url=http://{{ mdm_audit_server_host }}:{{ mdm_audit_server_port }}/"
 
 #
-# Update database parameters
-#
-
-#
 # Copy DB Driver
 #
-- name: Copy DB Driver
-  when: mdm_database != "h2"
+- name: Copy DB Driver (talend tomcat)
+  when: mdm_database != "h2" and app_use_talend_tomcat == "yes"
   copy:
     src: "{{ mdm_db_driver }}"
-    dest: "{{ install_prefix + '/' + rpm_folder + '/tomcat/lib/' + mdm_database + '.driver.jar' }}"
+    dest: "{{ install_prefix + '/' + rpm_folder + '/tomcat/lib' }}"
     owner: root
     group: root
     mode: 0644
+
+- name: Copy DB Driver (other tomcat)
+  when: mdm_database != "h2" and app_use_talend_tomcat == "no"
+  copy:
+    src: "{{ mdm_db_driver }}"
+    dest: "{{ app_tomcat_home + '/lib' }}"
+    owner: root
+    group: root
+    mode: 0644
+
+#
+# Update database parameters
+#
 
 # 
 # For H2 database
