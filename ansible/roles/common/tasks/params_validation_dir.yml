@@ -14,7 +14,7 @@
 - name: Check that existing folder is not a file
   fail:
     msg: "For {{app_name}}, catalog entry for folder {{app_dir}} does exist, but it is not a directory !"
-  when: var_app_dir_status.stat.exists && not var_app_dir_status.stat.isdir
+  when: var_app_dir_status.stat.exists and not var_app_dir_status.stat.isdir
 
 - name: "{{app_name}}: check parent folder of {{ app_dir }} for existence"
   when: not var_app_dir_status.stat.exists
@@ -23,11 +23,11 @@
   register: var_app_dir_status2
 
 - name: Show message about non-existing parent folder
-  when: not var_app_dir_status.stat.exists && not not var_app_dir_status2.stat.exists
+  when: not var_app_dir_status.stat.exists and not var_app_dir_status2.stat.exists
   fail:
     msg: "{{app_name}}: the parent folder of {{ app_dir }} does not exist !"
 
 - name: Show message when parent folder is not a folder
-  when: not var_app_dir_status.stat.exists && var_app_dir_status2.stat.exists && not var_app_dir_status2.stat.isdir
+  when: not var_app_dir_status.stat.exists and var_app_dir_status2.stat.exists and not var_app_dir_status2.stat.isdir
   fail:
     msg: "{{app_name}}: the parent folder of {{ app_dir }} does exist, but it is not a folder !"

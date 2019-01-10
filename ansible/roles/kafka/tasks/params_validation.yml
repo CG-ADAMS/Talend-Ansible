@@ -6,8 +6,8 @@
 ######################################
 
 # Check folder-type parameters: zook_datadir, kafka_log_dirs
-- include_task: ../../common/tasks/params_validation_dir.yml
-  loop:
+- include_tasks: ../../common/tasks/params_validation_dir.yml
+  with_items:
     - "{{zook_datadir}}"
     - "{{kafka_log_dirs}}"
   loop_control:
@@ -16,7 +16,7 @@
 # Check port-type parameter: zook_clientPort
 - name: Check port-type parameters
   fail:
-    msg: "Parameter {{item.name}} is not a valid TCP/IP port number !"
-  when: {{ not item.value is match( "[0-9]*" ) || item.value|int < 0 || item.value.int > 65535 }}
-  loop:
+    msg: "Parameter {{item.name}} has value {{item.value}}, which is not a valid TCP/IP port number !"
+  when: not ( item.value | string | regex_search( '[0-9]*' ) ) or ( item.value | int < 0 ) or ( item.value | int > 65535 )
+  with_items:
     - { name: "zook_clientPort", value: "{{zook_clientPort}}" }
