@@ -1,0 +1,22 @@
+---
+# This script performs different parameters validation
+
+######################################
+# Kafka-specific parameters validation
+######################################
+
+# Check folder-type parameters: zook_datadir, kafka_log_dirs
+- include_task: ../../common/tasks/params_validation_dir.yml
+  loop:
+    - "{{zook_datadir}}"
+    - "{{kafka_log_dirs}}"
+  loop_control:
+    loop_var: app_dir
+
+# Check port-type parameter: zook_clientPort
+- name: Check port-type parameters
+  fail:
+    msg: "Parameter {{item.name}} is not a valid TCP/IP port number !"
+  when: {{ not item.value is match( "[0-9]*" ) || item.value|int < 0 || item.value.int > 65535 }}
+  loop:
+    - { name: "zook_clientPort", value: "{{zook_clientPort}}" }
