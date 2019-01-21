@@ -1,7 +1,7 @@
 Role Name
 =========
 
-The role TCOMP for Talend Components Catalog allow Talend products to manage any source and destination of data.
+The role SJS for Spark Job Server provides a RESTful interface for submitting and managing Apache Spark jobs, jars, and job contexts
 
 Requirements
 ------------
@@ -24,12 +24,12 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: tcomp-group
+    - hosts: sjs-group
       remote_user: root
       roles:
         - java
         - talend-repo
-        - tcomp
+        - sjs
 
 
 License
