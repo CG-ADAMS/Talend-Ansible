@@ -7,6 +7,15 @@ app_name:    'Talend Kafka'
 rpm_name:    'talend-kafka'
 rpm_folder:  'kafka'
 
+# Variable (RPM version) for Kafka RPM
+kafka_pkg_version: 7.1.1-1
+
+#####
+# Installation as systemd service
+#####
+app_install_systemd:  "yes"       # allowed values "yes" and "no"
+
+
 # Zookeeper-specific properties
 
 zook_datadir: '/tmp/zookeeper'

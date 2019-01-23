@@ -1,0 +1,46 @@
+---
+
+# app_name, rpm_name and rpm_folder are standard variables, must be redefined for each role
+# it allows re-usage of tasks
+
+app_name:    'Talend MongoDB'
+rpm_name:    'talend-mongodb'
+rpm_folder:  'mongodb'
+app_service: 'talend-mongodb'
+
+# Variable (RPM version) for MongoDB RPM
+mongodb_pkg_version: 7.1.1-1
+
+#####
+# Installation as systemd service
+#####
+app_install_systemd:  "yes"       # allowed values "yes" and "no"
+
+# MongoDB-specific properties
+
+# TCP/IP port used by MongoDB daemon
+
+mongodb_port: 27017
+
+
+# Whether to install enhanced security (yes | no). Some applications (like TDS) *requires* enhanced security
+#         to be set.
+# This setting can be specified only for installation. Changing it later will have no effect
+
+mongodb_enhancedsecurity: "yes"
+
+
+# User and passwords for TDS, TDP and TDQ
+# This information can be specified only for installation. Changing it later will have no effect
+# If you do not want to use particular user, use "-" as user name.
+# For example:
+#        mongodb_tdp_user: "-"
+
+mongodb_tds_user:     "tds-user"
+mongodb_tds_password: "duser"
+
+mongodb_tdp_user:     "dataprep-user"
+mongodb_tdp_password: "duser"
+
+mongodb_tdq_user:     "dqdict-user"
+mongodb_tdq_password: "duser"
