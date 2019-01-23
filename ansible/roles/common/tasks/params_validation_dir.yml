@@ -7,18 +7,17 @@
 #  - app_name - application name. Used in text messages to get the idea which application requires this folder
 
 - name: "{{app_name}}: check parent folder of {{ app_dir }} for existence"
-  when: not var_app_dir_status.stat.exists
   stat:
     path: "{{ app_dir | dirname }}"
   register: var_app_dir_status2
 
 - name: Show message about non-existing parent folder
-  when: not var_app_dir_status.stat.exists and not var_app_dir_status2.stat.exists
+  when: not var_app_dir_status2.stat.exists
   fail:
     msg: "{{app_name}}: the parent folder of {{ app_dir }} does not exist !"
 
 - name: Show message when parent folder is not a folder
-  when: not var_app_dir_status.stat.exists and var_app_dir_status2.stat.exists and not var_app_dir_status2.stat.isdir
+  when: var_app_dir_status2.stat.exists and not var_app_dir_status2.stat.isdir
   fail:
     msg: "{{app_name}}: the entry for parent folder of {{ app_dir }} does exist, but it is not a folder !"
 

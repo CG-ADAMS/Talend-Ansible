@@ -28,10 +28,18 @@
 
 - name: "Install {{ app_name }} with rpm (non-default folder)"
   when: install_prefix != '/opt/talend' and (rpm_is_installed.stdout == '' or rpm_install_path.stdout != install_prefix)
-  command: "rpm -i --prefix={{ install_prefix }} {{ rpm_repo_url }}/{{ rpm_name }}-{{ kafka_pkg_version }}.x86_64.rpm"
+  command: "rpm -i --prefix={{ install_prefix }} {{ rpm_repo_url }}/{{ rpm_name }}-{{ mongodb_pkg_version }}.x86_64.rpm"
   args:
     warn: no
   environment:
-    TALEND_INSTALL_USER: '{{ install_user }}'
-    TALEND_INSTALL_GROUP: '{{ install_group }}'
+    TALEND_INSTALL_USER:    "{{ install_user }}"
+    TALEND_INSTALL_GROUP:   "{{ install_group }}"
     TALEND_INSTALL_SYSTEMD: "{{ '1' if app_install_systemd == 'yes' else '0' }}"
+    TALEND_MONGODB_PORT:    "{{ mongodb_port }}"
+    TALEND_MONGODB_ENH_SECURITY: "{{ '1' if mongodb_enhancedsecurity == 'yes' else '0' }}"
+    TALEND_MONGODB_TDS_USER: "{{ mongodb_tds_user }}"
+    TALEND_MONGODB_TDS_PASS: "{{ mongodb_tds_password }}"
+    TALEND_MONGODB_TDP_USER: "{{ mongodb_tdp_user }}"
+    TALEND_MONGODB_TDP_PASS: "{{ mongodb_tdp_password }}"
+    TALEND_MONGODB_TDQ_USER: "{{ mongodb_tdq_user }}"
+    TALEND_MONGODB_TDQ_PASS: "{{ mongodb_tdq_password }}"
