@@ -1,0 +1,190 @@
+---
+# This script used for updating current application parameters (first install & upgrade)
+# It can be run just after the installation or after some time (re-configuration)
+# Some parameters cannot be re-configured (installation path, user, group, tomcat deployment, tomcat port, systemd status)
+# All other parameters must be reconfigured here
+
+#####
+# Set the path to the tomcat config location of TDS
+#####
+- name: Set tds_config_location when talend tomcat is used
+  when: app_use_talend_tomcat == 'yes'
+  set_fact:
+    tds_config_location: "{{ install_prefix }}/tds/tomcat/conf/data-stewardship.properties"
+
+- name: Set tds_config_location when customer tomcat is used
+  when: app_use_talend_tomcat == 'no'
+  set_fact:
+    tds_config_location: "{{ app_tomcat_home }}/conf/data-stewardship.properties"
+
+
+#####
+# Update TDS configuration
+#####
+# Tomcat
+# TODO : see if it's posssible
+# - name: Update tomcat port
+#   when: app_use_talend_tomcat == 'yes'
+#   replace:
+#     path: "{{ tds_config_location }}"
+#     regexp:  "{{ item }}"
+#     replace: '\g<1>{{ app_tomcat_port }}\g<2>'
+#   with_items:
+#       - '^(frontend\.url=.*:)[0-9]{2,5}(/.*)$'
+#       - '^(backend\.url=.*:)[0-9]{2,5}(/.*)$'
+#       - '^(schemaservice\.url=.*:)[0-9]{2,5}(/.*)$'
+#       - '^(historyservice\.url=.*:)[0-9]{2,5}(/.*)$'
+
+
+# Kafka
+- name: Update kafka broker
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^kafka\.broker=.*'
+    replace: 'kafka.broker={{ tds_kafka_host }}:{{ tds_kafka_port }}'
+
+
+# MongoDB
+- name: Update MongoDB hosts
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^spring\.data\.mongodb\.host=.*'
+    replace: 'spring.data.mongodb.host={{ tds_mongo_host }}'
+
+- name: Update MongoDB port
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^spring\.data\.mongodb\.port=.*'
+    replace: 'spring.data.mongodb.port={{ tds_mongo_port }}'
+
+- name: Update MongoDB dbname
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^spring\.data\.mongodb\.database=.*'
+    replace: 'spring.data.mongodb.database={{ tds_mongo_database }}'
+
+- name: Update MongoDB user
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^spring\.data\.mongodb\.username=.*'
+    replace: 'spring.data.mongodb.username={{ tds_mongo_username }}'
+
+- name: Update MongoDB password
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^spring\.data\.mongodb\.password=.*'
+    replace: 'spring.data.mongodb.password={{ tds_mongo_password }}'
+
+
+# Security / authent
+- name: Update scim url (IAM)
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^scim\.url=.*'
+    replace: 'scim.url={{ tds_security_scim_url }}'
+    
+- name: Update oidc url
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.url=.*'
+    replace: 'oidc.url={{ tds_security_oidc_url }}'
+    
+- name: Update oidc userauth url
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.userauth\.url=.*'
+    replace: 'oidc\.userauth.url={{ tds_security_oidc_user_auth_url }}'
+    
+- name: Update oidc gateway ID
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.gateway\.id=.*'
+    replace: 'oidc.gateway.id={{ tds_oidc_id }}'
+    
+- name: Update oidc gateway secret
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.gateway\.secret=.*'
+    replace: 'oidc.gateway.secret={{ tds_oidc_secret }}'
+    
+- name: Update oidc tds ID
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.tds\.id=.*'
+    replace: 'oidc.tds.id={{ tds_oidc_id }}'
+    
+- name: Update oidc tds secret
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.tds\.secret=.*'
+    replace: 'oidc.tds.secret={{ tds_oidc_secret }}'
+    
+- name: Update oidc history ID
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.history\.id=.*'
+    replace: 'oidc.history.id={{ tds_oidc_id }}'
+    
+- name: Update oidc history secret
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.history\.secret=.*'
+    replace: 'oidc.history.secret={{ tds_oidc_secret }}'
+    
+- name: Update oidc schema ID
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.schema\.id=.*'
+    replace: 'oidc.schema.id={{ tds_oidc_id }}'
+    
+- name: Update oidc schema secret
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^oidc\.schema\.secret=.*'
+    replace: 'oidc.schema.secret={{ tds_oidc_secret }}'
+    
+
+# Activate semantic or not
+- name: Activate semantic
+  when: tds_use_semantic == "yes"
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^#semanticservice\.url='
+    replace: "semanticservice.url="
+
+# TODO : If we only need to change the port (see TODO in defaults/main.yaml)
+# - name: Change semantic port
+#   when: tds_use_semantic == "yes"
+#   replace:
+#     path: "{{ tds_config_location }}"
+#     regexp:  '^(semanticservice\.url=.*:)[0-9]{2,5}(/.*)$'
+#     replace: '\g<1>{{ tds_semantic_port }}\g<2>'
+
+- name: Update semantic url
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^semanticservice\.url=.*'
+    replace: 'semanticservice.url={{ tds_semantic_url }}'
+
+- name: Deactivate semantic
+  when: tds_use_semantic == "no"
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^semanticservice\.url='
+    replace: "#semanticservice.url="
+
+
+# Active switch to TDP or not
+- name: Activate switch between TDS & TDP
+  when: tds_use_tdp_switch == "yes"
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^#tds\.front\.tdpUrl=.*'
+    replace: "tds.front.tdpUrl={{ tds_front_tdp_url }}"
+
+- name: Deactivate switch between TDS & TDP
+  when: tds_use_tdp_switch == "no"
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^tds\.front\.tdpUrl=.*'
+    replace: "#tds.front.tdpUrl="

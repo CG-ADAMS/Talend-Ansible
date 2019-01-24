@@ -1,0 +1,74 @@
+---
+# This script performs different parameters validation
+
+######################################
+# TDS-specific parameters validation
+######################################
+
+# verify that string parameters have a non empty value
+- name: Show error that no value is specified for parameter {{ item.name }}
+  when: item.value == ""
+  fail:
+    msg: "{{ app_name }} - no values is specified for parameter '{{ item.name }}'"
+  with_items:
+    - { name: 'tds_kafka_host', value: "{{ tds_kafka_host }}"}
+    - { name: 'tds_mongo_host', value: "{{ tds_mongo_host }}"}
+    - { name: 'tds_mongo_database', value: "{{ tds_mongo_database }}"}
+    - { name: 'tds_mongo_username', value: "{{ tds_mongo_username }}"}
+    - { name: 'tds_mongo_password', value: "{{ tds_mongo_password }}"}
+    - { name: 'tds_security_scim_url', value: "{{ tds_security_scim_url }}"}
+    - { name: 'tds_security_oidc_url', value: "{{ tds_security_oidc_url }}"}
+    - { name: 'tds_security_oidc_user_auth_url', value: "{{ tds_security_oidc_user_auth_url }}"}
+    - { name: 'tds_oidc_id', value: "{{ tds_oidc_id }}"}
+    - { name: 'tds_oidc_secret', value: "{{ tds_oidc_secret }}"}
+
+
+# verify flag yes/no have a correct value and are non empty
+- name: Show error about wrong value for parameter tds_use_semantic
+  fail:
+    msg: Wrong value for parameter "tds_use_semantic", must be 'yes' or 'no'
+  when: tds_use_semantic != "no" and tds_use_semantic != "yes"
+
+- name: Show error about wrong value for parameter tds_use_tdp_switch
+  fail:
+    msg: Wrong value for parameter "tds_use_tdp_switch", must be 'yes' or 'no'
+  when: tds_use_tdp_switch != "no" and tds_use_tdp_switch != "yes"
+
+
+# specific non empty check for tds_front_tdp_url
+- name: Show error that no value is specified for tds_front_tdp_url when tds_use_tdp_switch is 'yes'
+  fail:
+    msg: "{{ app_name }} - no values is specified for 'tds_front_tdp_url'"
+  when: tds_use_tdp_switch == "yes" and tds_front_tdp_url == ""
+
+
+# specific non empty check for tds_semantic_url
+- name: Show error that no value is specified for tds_semantic_url when tds_use_semantic is 'yes'
+  fail:
+    msg: "{{ app_name }} - no values is specified for 'tds_semantic_url'"
+  when: tds_use_semantic == "yes" and tds_semantic_url == ""
+
+
+# verify the port parameters (integer and correct port number)
+- name: Show error about wrong value for parameter {{ item.name }}, not a number
+  when: item.value|int == 0
+  fail:
+    msg: "{{ app_name }} - wrong value for parameter '{{ item.name }}', must be a valid number"
+  with_items:
+    - { name: 'tds_kafka_port', value: "{{ tds_kafka_port }}"}
+    - { name: 'tds_mongo_port', value: "{{ tds_mongo_port }}"}
+
+- name: Show error about wrong value for parameter {{ item.name }}, must be a valid TCP/IP port number
+  when: item.value|int > 65535 or item.value|int < 0"
+  fail:
+    msg: "{{ app_name }} - wrong value for parameter '{{ item.name }}', must be a valid TCP/IP port number"
+  with_items:
+    - { name: 'tds_kafka_port', value: "{{ tds_kafka_port }}"}
+    - { name: 'tds_mongo_port', value: "{{ tds_mongo_port }}"}
+
+
+# verify that the default password for mongo was changed
+- name: Show error when example value of tds_mongo_password was not modified
+  fail:
+    msg: Please, don't use value "duser" and set a stong password for tds_mongo_password
+  when: tds_mongo_password == "duser"
