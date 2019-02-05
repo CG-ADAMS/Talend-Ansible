@@ -8,6 +8,11 @@ rpm_name:    'talend-jobserver'
 rpm_folder:  'jobserver'
 app_service: 'talend-jobserver'
 
+#######################################
+#  SystemD installation properties
+#######################################
+app_install_systemd: "yes"           # Allowed values are "yes" and "no"
+
 
 ##########################################################################
 # Jobserver-specific configuration variables
@@ -46,7 +51,7 @@ js_disabled_cipher_suites: ""
 js_run_as_whitelist: ""
 
 # Ensure that undesired instructions are not inserted in the user name variable.
-js_run_as_user_validation_regexp: "^[a-z][-a-z0-9]*\$"
+js_run_as_user_validation_regexp: '^[a-z][-a-z0-9]*\$'
 
 # The token that allow job server execute unsigned job
 js_execute_unsigned_job_token: ""

@@ -51,7 +51,7 @@
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org.talend.remote.jobserver.server.TalendJobServer.ENABLED_PROCESS_MESSAGE=.*'
-    replace: 'org.talend.remote.jobserver.server.TalendJobServer.ENABLED_PROCESS_MESSAGE={{ js_enabled_process_message }}'
+    replace: 'org.talend.remote.jobserver.server.TalendJobServer.ENABLED_PROCESS_MESSAGE={{ js_enabled_process_message |lower }}'
 
 - name: Update the local hostname of this server
   replace:
@@ -63,7 +63,7 @@
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org\.talend\.remote\.jobserver\.server\.TalendJobServer\.USE_SSL=.*'
-    replace: 'org.talend.remote.jobserver.server.TalendJobServer.USE_SSL=={{ js_use_ssl }}'
+    replace: 'org.talend.remote.jobserver.server.TalendJobServer.USE_SSL={{ js_use_ssl |lower }}'
 
 - name: Update Disabled SSL cipher suites
   replace:
@@ -99,13 +99,13 @@
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org\.talend\.monitoring\.jmx.server\.OsInfoRetriever\.FORCE_LOAD=.*'
-    replace: 'org.talend.monitoring.jmx.server.OsInfoRetriever.FORCE_LOAD={{ js_force_load }}'
+    replace: 'org.talend.monitoring.jmx.server.OsInfoRetriever.FORCE_LOAD={{ js_force_load |lower }}'
 
 - name: Update the shell which launches the jobs
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org\.talend\.remote\.jobserver\.commons\.config\.JobServerConfiguration\.LAUNCH_SHELL_SCRIPT=.*'
-    replace: 'org.talend.remote.jobserver.commons.config.JobServerConfiguration.LAUNCH_SHELL_SCRIPT={{ js_launch_shell_script }}'
+    replace: 'org.talend.remote.jobserver.commons.config.JobServerConfiguration.LAUNCH_SHELL_SCRIPT={{ js_launch_shell_script |lower }}'
 
 - name: Update the shell which launches the jobs (2)
   replace:
@@ -178,7 +178,7 @@
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org\.talend\.remote\.jobserver\.commons\.config\.JobServerConfiguration\.SECURITY_MODE=.*'
-    replace: 'org.talend.remote.jobserver.commons.config.JobServerConfiguration.SECURITY_MODE={{ js_security_mode }}'
+    replace: 'org.talend.remote.jobserver.commons.config.JobServerConfiguration.SECURITY_MODE={{ js_security_mode |lower }}'
 
 - name: Update TAC url list
   replace:
@@ -191,20 +191,20 @@
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  '(#)*(\s)*org\.talend\.remote\.jobserver\.commons\.config\.JobServerConfiguration\.TAC_URLS=.*'
-    replace: '#org.talend.remote.jobserver.commons.config.JobServerConfiguration.TAC_URLS='
+    replace: '#org.talend.remote.jobserver.commons.config.JobServerConfiguration.TAC_URLS=http://host1:8080/org.talend.administrator,http://host2:8080/org.talend.administrator'
   when: js_tac_urls == ""
 
 - name: Update SSL setting for JMX monitoring server
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org\.talend\.jmxmp\.useSSL=.*'
-    replace: 'org.talend.jmxmp.useSSL={{ js_jmxmp_useSSL }}'
+    replace: 'org.talend.jmxmp.useSSL={{ js_jmxmp_useSSL |lower }}'
 
 - name: Update certificate based client authorization setting for JMX monitoring server
   replace:
     path: "{{install_prefix}}/jobserver/conf/TalendJobServer.properties"
     regexp:  'org\.talend\.jmxmp\.ssl\.authenticate=.*'
-    replace: 'org.talend.jmxmp.ssl.authenticate={{ js_ssl_authenticate }}'
+    replace: 'org.talend.jmxmp.ssl.authenticate={{ js_ssl_authenticate |lower }}'
 
 - name: Update path_to_monitoring_server_keystore
   replace:

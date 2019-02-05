@@ -20,7 +20,7 @@
 - name: Check boolean parameters
   fail:
     msg: "Parameter {{item.name}} has value {{item.value}}, which is not a boolean (must be true or false) !"
-  when: item.value != "true" and item.value != "false"
+  when: item.value | lower != "true" and item.value | lower != "false"
   with_items:
     - { name: "js_enabled_process_message",  value: "{{js_enabled_process_message}}"  }
     - { name: "js_use_ssl",                  value: "{{js_use_ssl}}"                  }
@@ -33,7 +33,7 @@
 - name: Check optional boolean parameters
   fail:
     msg: "Parameter {{item.name}} has value {{item.value}}, which is not a boolean (must be true or false) !"
-  when: item.value != "" and item.value != "true" and item.value != "false"
+  when: item.value != "" and item.value | lower != "true" and item.value | lower != "false"
   with_items:
     - { name: "js_remote_server_ssl_authenticate", value: "{{js_remote_server_ssl_authenticate}}" }
 
