@@ -9,7 +9,7 @@ rpm_folder:  'mdm'
 app_service: 'talend-mdm'
 
 ##########################################################################
-# TAC-specific configuration variables
+# MDM-specific configuration variables
 # We will use "mdm_" prefix in var names
 ##########################################################################
 

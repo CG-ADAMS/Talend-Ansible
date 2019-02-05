@@ -1,4 +1,0 @@
----
-  - name: restart talend-jobserver
-    service: name=talend-jobserver state=restarted
-    listen: "restart-jobserver"
