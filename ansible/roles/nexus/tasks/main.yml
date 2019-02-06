@@ -7,7 +7,7 @@
 - include_tasks: ../../common/tasks/params_validation_extra.yml
 
 # Check situation with current status (e.g. installed but into different path - that would be an error)
-- include_tasks: ../../common/tasks/check_status.yml
+- include_tasks: check_status.yml
 
 # Stop systemd service (if it exists, as it might not exist on a new installation)
 #   We need this to update configuration

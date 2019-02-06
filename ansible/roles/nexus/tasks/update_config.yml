@@ -12,27 +12,27 @@
 - name: Update host
   replace:
     path: "{{install_prefix}}/nexus/sonatype-work/nexus3/etc/nexus.properties"
-    regexp:  '^(#)?(\w)*application-host=.*'
+    regexp:  '^(#)?(\s)*application-host=.*'
     replace: 'application-host={{ nexus_host }}'
-  when nexus_host != "0.0.0.0"
+  when: nexus_host != "0.0.0.0"
 
 - name: Update host (2)
   replace:
     path: "{{install_prefix}}/nexus/sonatype-work/nexus3/etc/nexus.properties"
-    regexp:  '^(#)?(\w)*application-host=.*'
+    regexp:  '^(#)?(\s)*application-host=.*'
     replace: '# application-host={{ nexus_host }}'
-  when nexus_host = "0.0.0.0"
+  when: nexus_host == "0.0.0.0"
 
 - name: Update port
   replace:
     path: "{{install_prefix}}/nexus/sonatype-work/nexus3/etc/nexus.properties"
-    regexp:  '^(#)?(\w)*application-port=.*'
-    replace: 'application-host={{ nexus_port }}'
-  when nexus_port != "8081"
+    regexp:  '^(#)?(\s)*application-port=.*'
+    replace: 'application-port={{ nexus_port }}'
+  when: nexus_port != "8081"
 
 - name: Update port (2)
   replace:
     path: "{{install_prefix}}/nexus/sonatype-work/nexus3/etc/nexus.properties"
-    regexp:  '^(#)?(\w)*application-port=.*'
-    replace: '# application-host={{ nexus_port }}'
-  when nexus_port == "8081"
+    regexp:  '^(#)?(\s)*application-port=.*'
+    replace: '# application-port={{ nexus_port }}'
+  when: nexus_port == "8081"
