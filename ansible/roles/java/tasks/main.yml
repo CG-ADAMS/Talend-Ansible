@@ -6,6 +6,10 @@
     packages:
      - java-1.8.0-openjdk
 
+- name: Save java dir to variable
+  shell: 'dirname $(dirname $(readlink -e /usr/bin/java))'
+  register: java_dir
+
 - name: Update JAVA_HOME for root user
   lineinfile:
     path: '/root/.bashrc'
