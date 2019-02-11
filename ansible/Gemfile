@@ -1,0 +1,22 @@
+source 'http://rubygems.org'
+
+gem 'ansible'
+gem 'rake'
+
+group :test do
+  gem 'metadata-json-lint'
+end
+
+group :development do
+  gem 'vagrant-wrapper'
+  gem 'kitchen-vagrant'
+end
+
+group :system_tests do
+  gem 'test-kitchen'
+  gem 'kitchen-ansible'
+  gem 'kitchen-sync'
+  gem 'kitchen-verifier-serverspec'
+  gem 'net-ssh'
+  gem 'serverspec'
+end
