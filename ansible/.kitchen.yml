@@ -1,0 +1,35 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_playbook
+  roles_path: roles
+  hosts: tac-group
+  require_ansible_repo: true
+  ansible_verbose: true
+  ansible_diff: true
+  shell_command: bash
+
+transport:
+  name: sftp
+
+platforms:
+  - name: centos-7.5
+
+verifier:
+  name: serverspec
+  remote_exec: false
+  extra_flags: '--require spec_helper -I spec/acceptance'
+
+suites:
+  - name: runtime
+#    driver:
+#      vm_name: tac
+#      customize:
+#        name: tac
+    provisioner:
+      playbook: examples/runtime.yml
+    verifier:
+      patterns:
+        - 'spec/acceptance/runtime_spec.rb'
