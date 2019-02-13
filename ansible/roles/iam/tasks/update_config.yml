@@ -1,0 +1,74 @@
+---
+
+# This script used for updating current application parameters if the application is already installed
+# It can be run just after the installation or after some time (re-configuration)
+# Some parameters cannot be re-configured (installation path, user, group, tomcat deployment, systemd status)
+# All other parameters must be reconfigured here
+
+# Update admin user/password
+
+- name: Update IAM TAC admin user
+  replace:
+    path: "{{ iam_config_location }}/iam.properties"
+    regexp:  'tac\.admin\.user=.*'
+    replace: 'tac.admin.user={{ iam_tac_user }}'
+
+- name: Update IAM TAC admin password
+  replace:
+    path: "{{ iam_config_location }}/iam.properties"
+    regexp:  'tac\.password=.*'
+    replace: 'tac.password={{ iam_tac_password }}'
+
+- name: Update IAM TAC URL
+  replace:
+    path: "{{ iam_config_location }}/iam.properties"
+    regexp:  'tac\.url=.*'
+    replace: 'tac.url={{ iam_tac_url }}'
+
+- name: Update IAM Host
+  replace:
+    path: "{{ iam_config_location }}/iam.properties"
+    regexp:  'iam\.host=.*'
+    replace: 'iam.host={{iam_hostname | lower}}'
+
+- name: Update IAM Port
+  replace:
+    path: "{{ iam_config_location }}/iam.properties"
+    regexp:  'iam\.url=.*'
+    replace: 'iam.url=http://${iam.host}:{{iam_tomcat_port}}'
+
+- name: Update IAM Tomcat Port in fediz
+  replace:
+    path: "{{ iam_config_location }}/fediz_config.xml"
+    regexp:  '<issuer>.*</issuer>'
+    replace: '<issuer>http://{{iam_hostname | lower}}:{{iam_tomcat_port}}/idp/federation</issuer>'
+
+- name: Update IAM Tomcat Host in Syncope Console
+  replace:
+    path: "{{ iam_webapps_location }}/syncope-console/WEB-INF/classes/console.properties"
+    regexp:  'host=.*'
+    replace: 'host={{ iam_hostname | lower }}'
+
+- name: Update IAM Tomcat Port in Syncope Console
+  replace:
+    path: "{{ iam_webapps_location }}/syncope-console/WEB-INF/classes/console.properties"
+    regexp:  'port=.*'
+    replace: 'port={{ iam_tomcat_port }}'
+
+- name: Update IAM Tomcat Host in Syncope Enduser
+  replace:
+    path: "{{ iam_webapps_location }}/syncope-enduser/WEB-INF/classes/enduser.properties"
+    regexp:  'host=.*'
+    replace: 'host={{ iam_hostname | lower }}'
+
+- name: Update IAM Tomcat Port in Syncope Enduser
+  replace:
+    path: "{{ iam_webapps_location }}/syncope-enduser/WEB-INF/classes/enduser.properties"
+    regexp:  'port=.*'
+    replace: 'port={{ iam_tomcat_port }}'
+
+- name: Update language in setenv.sh
+  replace:
+    path: "{{ iam_tomcat_location }}/bin/setenv.sh"
+    regexp:  '-Dspring.mvc.locale=..'
+    replace: '-Dspring.mvc.locale={{iam_language}}'
