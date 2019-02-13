@@ -16,7 +16,7 @@
 # Check language
 - name: Check language setting
   fail:
-    msg: "Parameter iam_language must be one of en, fr, ja, zh
+    msg: "Parameter iam_language must be one of en, fr, ja, zh"
   when: iam_language != "en" and iam_language != "fr" and iam_language != "ja" and iam_language != "zh"
 
 - name: Check URL params
