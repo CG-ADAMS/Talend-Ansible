@@ -27,14 +27,13 @@ Before running the script, if necessary, you can change the following variables 
   app_use_talend_tomcat: 'yes'
   app_tomcat_port: 8080 
   ```
-  To update customer's Tomcat configuration, use `app_tomcat_setup: 'yes'` and specify Tomcat home folder, port and mode. For example:
+  To use customer's Tomcat, use `app_use_talend_tomcat: 'no'`. In this case, you will need to specify following parameters:
   ```
   app_tomcat_port: 8080
   app_tomcat_home: '/opt/tomcat'
   app_tomcat_mode: 'direct'
   app_tomcat_setup: 'yes'
   ```
-  These parameters will be taken in account only if `app_use_talend_tomcat: 'no'`.
 - Systemd
 
   If you want to install as systemd service, use `app_install_systemd` parameter, for which allowed values are "yes" or "no". For example:
