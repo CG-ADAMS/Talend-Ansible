@@ -27,14 +27,14 @@ Before running the script, if necessary, you can change the following variables 
   app_use_talend_tomcat: 'yes'
   app_tomcat_port: 8080 
   ```
-  To use customer's tomcat, change `app_use_talend_tomcat: 'yes'` to `app_use_talend_tomcat: 'no'` and use `app_tomcat_setup` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify tomcat home folder, port and mode. For example:
+  To update customer's Tomcat configuration, use `app_tomcat_setup: 'yes'` and specify Tomcat home folder, port and mode. For example:
   ```
-  app_use_talend_tomcat: 'no'
-  app_tomcat_port:  8080
-  app_tomcat_home:  '/opt/tomcat'
-  app_tomcat_mode:  'direct'
+  app_tomcat_port: 8080
+  app_tomcat_home: '/opt/tomcat'
+  app_tomcat_mode: 'direct'
   app_tomcat_setup: 'yes'
   ```
+  These parameters will be taken in account only if `app_use_talend_tomcat: 'no'`.
 - Systemd
 
   If you want to install as systemd service, use `app_install_systemd` parameter, for which allowed values are "yes" or "no". For example:
@@ -72,16 +72,17 @@ Before running the script, if necessary, you can change the following variables 
 
   To select a database, use `tac_database` parameter, which takes one of the values ("h2", "mysql", "oracle", "mssql", "postgresql", "mariadb") and also specify database name, host, port, username and password. For example:
   ```
-  tac_database: "h2"
+  tac_database: "mysql"
   tac_db_host: 'localhost'
   tac_db_port: 3306
   tac_db_name: 'talend_administrator'
   tac_db_user: 'talend'
   tac_db_password: 'talend'
   ```  
+  If you want to use h2 database, remaining parameters are optional.
 - JobServer
 
-  To set up JobServer, use `tac_setup_jobserver` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify JobServer name, host, command port, file transfer port, monitoring port and also username and password if specified. For example:
+  To configure JobServer settings, use `tac_setup_jobserver` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify JobServer name, host, command port, file transfer port, monitoring port and also username and password if specified. For example:
   ```
   tac_setup_jobserver: 'yes'                      
   tac_jobserver_name: 'jobserver'
@@ -112,17 +113,19 @@ Before running the script, if necessary, you can change the following variables 
   
   To automatically install a license during installation, use `tac_install_license` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify path to license file using parameter `tac_license_file`. For example:
   ```
-  tac_install_license: 'no'
+  tac_install_license: 'yes'
   tac_license_file: '/mnt/share/licenses/last.license'
   ```
-
+  
 Dependencies
 ------------
 
-The following roles are also used to successfully install and deploy Talend Administrator Center:
+The following roles must be used to successfully install and deploy Talend Administrator Center:
 - java
 - talend-repo
-- tomcat
+- tomcat (must be used if `app_use_talend_tomcat: 'yes'`)
+
+All necessary roles must be defined before "tac" role, see Example Playbook.
 
 Example Playbook
 ----------------
