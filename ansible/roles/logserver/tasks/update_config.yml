@@ -1,5 +1,4 @@
 ---
----
 
 # This script used for updating current application parameters if the application is already installed
 # It can be run just after the installation or after some time (re-configuration)
