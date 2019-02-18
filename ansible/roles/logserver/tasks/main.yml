@@ -9,8 +9,9 @@
 # Stopping services (if they exist) before making any changes in the configuration
 - include_tasks: ../../common/tasks/stop_service.yml
   with_items:
-    - "talend-kafka"
-    - "talend-zookeeper"
+    - "talend-logstash"
+    - "talend-kibana"
+    - "talend-elastic"
   loop_control:
     loop_var: app_service
 
@@ -23,14 +24,15 @@
   when: install_prefix != '/opt/talend'
 
 
-# Updating configuration for Zookeeper and Kafka
+# Updating configuration for ElasticSeach, Kibana, LogStash
 - import_tasks: update_config.yml
 
 
 # Starting services (if they are exist)
 - include_tasks: ../../common/tasks/start_service.yml
   with_items:
-    - "talend-zookeeper"
-    - "talend-kafka"
+    - "talend-elastic"
+    - "talend-kibana"
+    - "talend-logstash"
   loop_control:
     loop_var: app_service
