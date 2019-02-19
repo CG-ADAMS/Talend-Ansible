@@ -1,33 +1,25 @@
 Talend Administrator Center (TAC)
 =========
 
-This role will install Talend Administrator Center (TAC).
+This role installs **Talend Administrator Center** (TAC).
 
-Requirements
-------------
+Make sure you completed the requirements listed in the [Root README](../../README.md) file.
 
-To run the script you need to install the following packages:
-- Extra Packages for Enterprise Linux
-  ```
-  su yum install epel-release
-  ```  
-- Ansible
-  ```
-  su yum install ansible
-  ```
-  
 Role Variables
 --------------
 
-Before running the script, if necessary, you can change the following variables that are in defaults/main.yml:
+Before running the script, you can change the following variable in the *defaults/main.yml* file:
+
+> **Note**: You can find details about each application installed using these Ansible roles in the corresponding RPM documentation on [Talend Help Center](https://help.talend.com/search/all?query=rpm&content-lang=en-US).
+
 - Tomcat
 
-  To use talend-tomcat in shared mode, use `app_use_talend_tomcat` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify Tomcat port. For example:
+  To use **tomcat** in shared mode, set the `app_use_talend_tomcat` parameter. Possible values are "yes" or "no". If set to "yes", then you need to specify a Tomcat port. For example:
   ```
   app_use_talend_tomcat: 'yes'
-  app_tomcat_port: 8080 
+  app_tomcat_port: 8080
   ```
-  To use customer's Tomcat, use `app_use_talend_tomcat: 'no'`. In this case, you will need to specify following parameters:
+  To use customer's Tomcat, set `app_use_talend_tomcat: 'no'`. In this case, you need to specify following parameters:
   ```
   app_tomcat_port: 8080
   app_tomcat_home: '/opt/tomcat'
@@ -36,32 +28,32 @@ Before running the script, if necessary, you can change the following variables 
   ```
 - Systemd
 
-  If you want to install as systemd service, use `app_install_systemd` parameter, for which allowed values are "yes" or "no". For example:
+  To install as systemd service, set the `app_install_systemd` parameter. Possible values are "yes" or "no". For example:
   ```
   app_install_systemd: 'yes'
   ```
 - Web-application name
 
-  To specify web-application name, use `tac_webapp_name` parameter. For example:
+  To specify the web-application name, set the `tac_webapp_name` parameter. For example:
   ```
   tac_webapp_name: 'org.talend.administrator'
   ```
 - Admin username/password
 
-  To specify admin username and password, use `tac_admin_user` and `tac_admin_pass` parameters. For example:
+  To specify the admin username and password, set the `tac_admin_user` and `tac_admin_pass` parameters. For example:
   ```
   tac_admin_user: 'security@company.com'
   tac_admin_pass: 'admin'
   ```
 - SSO
 
-  To use SSO, use `tac_use_sso` parameter, for which allowed values are "yes" or "no". For example
+  To use SSO, set the `tac_use_sso` parameter. Possible values are "yes" or "no". For example
   ```
   tac_use_sso: 'no'
   ```
 - LogServer
 
-  To use LogServer, use `tac_use_logserver` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify LogServer host and port. For example:
+  To use LogServer, set the `tac_use_logserver` parameter. Possible values are "yes" or "no". If the value is "yes", you need to specify LogServer host and port. For example:
   ```
   tac_use_logserver: 'yes'
   tac_logserver_host: 'localhost'
@@ -69,7 +61,7 @@ Before running the script, if necessary, you can change the following variables 
   ```
 - Database
 
-  To select a database, use `tac_database` parameter, which takes one of the values ("h2", "mysql", "oracle", "mssql", "postgresql", "mariadb") and also specify database name, host, port, username and password. For example:
+  To select a database, set the `tac_database` parameter. Possible values are "h2", "mysql", "oracle", "mssql", "postgresql" or "mariadb". Also specify the database name, host, port, username and password. For example:
   ```
   tac_database: "mysql"
   tac_db_host: 'localhost'
@@ -77,21 +69,21 @@ Before running the script, if necessary, you can change the following variables 
   tac_db_name: 'talend_administrator'
   tac_db_user: 'talend'
   tac_db_password: 'talend'
-  ```  
-  If you want to use h2 database, remaining parameters are optional.
+  ```
+  If you set `tac_database` to `h2`, the other parameters are optional.
 - JobServer
 
-  To configure JobServer settings, use `tac_setup_jobserver` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify JobServer name, host, command port, file transfer port, monitoring port and also username and password if specified. For example:
+  To configure JobServer settings, set the `tac_setup_jobserver` parameter. Possible values are "yes" or "no". If the value is "yes", specify the JobServer name, host, command port, file transfer port and monitoring port. If required, also specify the username and password. For example:
   ```
-  tac_setup_jobserver: 'yes'                      
+  tac_setup_jobserver: 'yes'
   tac_jobserver_name: 'jobserver'
   tac_jobserver_host: 'localhost'
   tac_jobserver_command_port: 8000
   tac_jobserver_file_transfer_port: 8001
   tac_jobserver_monitoring_port: 8888
-  tac_jobserver_username: 'talend'                
+  tac_jobserver_username: 'talend'
   tac_jobserver_password: 'talend'
-  ```  
+  ```
 - Socket appender
 
   When configuring Socket appender, the required parameters are `tac_appender_socket_host` and `tac_appender_socket_port`. For example:
@@ -101,21 +93,21 @@ Before running the script, if necessary, you can change the following variables 
   ```
 - Http appender
 
-  When configuring Http appender, the required parameters are `tac_appender_http_host` and `tac_appender_http_port`, but you can also use the username and password if specified. For example:
+  When configuring Http appender, the required parameters are `tac_appender_http_host` and `tac_appender_http_port`. If required, also specify the username and password. For example:
   ```
   tac_appender_http_host: 'localhost'
   tac_appender_http_port: 8057
-  tac_appender_http_username: 'talend'            
+  tac_appender_http_username: 'talend'
   tac_appender_http_password: 'talend'
-  ```  
+  ```
 - License
-  
-  To automatically install a license during installation, use `tac_install_license` parameter, for which allowed values are "yes" or "no". If the value is "yes", then you need to specify path to license file using parameter `tac_license_file`. For example:
+
+  To automatically install a license during the deployment, use the `tac_install_license` parameter. Possible values are "yes" or "no". If the value is "yes", specify the path to the license file using the `tac_license_file` parameter. For example:
   ```
   tac_install_license: 'yes'
   tac_license_file: '/mnt/share/licenses/last.license'
   ```
-  
+
 Dependencies
 ------------
 
@@ -124,7 +116,7 @@ The following roles must be used to successfully install and deploy Talend Admin
 - talend-repo
 - tomcat (must be used if `app_use_talend_tomcat: 'yes'`)
 
-All necessary roles must be defined before "tac" role, see Example Playbook.
+Roles listed above must be defined before the **tac** role in the playbook For example:
 
 Example Playbook
 ----------------
@@ -143,4 +135,3 @@ License
 -------
 
 BSD
-
