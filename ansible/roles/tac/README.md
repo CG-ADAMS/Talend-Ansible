@@ -3,7 +3,7 @@ Talend Administrator Center (TAC)
 
 This role installs **Talend Administrator Center** (TAC).
 
-Make sure you completed the requirements listed in the [Root README](../../README.md) file.
+Make sure you completed the requirements listed in the [Root README](../../../README.md) file.
 
 Role Variables
 --------------
