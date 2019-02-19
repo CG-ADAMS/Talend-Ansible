@@ -25,7 +25,7 @@
 - include_tasks: ../../common/tasks/install_rpm.yml
   when: install_prefix != '/opt/talend'
 
-# Update configuration - no need to update (to user-configurable variables for AMC)
+# Update configuration - no need to update (no user-configurable variables for AMC)
 
 # Starting systemd service
 - include_tasks: ../../common/tasks/start_service.yml
