@@ -8,7 +8,7 @@ Make sure you completed the requirements listed in the [Root README](../../../RE
 Role Variables
 --------------
 
-Before running the script, you can change the following variable in the *defaults/main.yml* file:
+Before running the script, you can change the following variables in the *defaults/main.yml* file:
 
 > **Note**: You can find details about each application installed using these Ansible roles in the corresponding RPM documentation on [Talend Help Center](https://help.talend.com/search/all?query=rpm&content-lang=en-US).
 
