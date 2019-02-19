@@ -20,9 +20,11 @@ To be able to install applications using Ansible, you need to setup your environ
 2. Install [Ansible](https://www.ansible.com/) on the master host used for the deployment: <br/> `sudo yum install ansible`
 3. All hosts need to be reachable via SSH from the master node. Hosts must be defined in `/etc/ansible/hosts` on the master node.
 
+Installing Talend applications using Ansible require CentOS 7.X as operating system.
+
 # Installing applications using Ansible
 
-1. Specify your credentials in the *ansible/group_vars/all* file. These credentials are used to access the RPM repository.
+1. Specify your credentials and the version of Talend applications to install in the *ansible/group_vars/all* file. These parameters are used to access the RPM repository.
 2. Configure the playbook you want to install by specifying:
   1. the **hosts** to install the roles on. Hosts must be defined in `/etc/ansible/hosts` on the master node.
   2. the **remote_user** name. Make sure that the user has the required permissions to install applications on all hosts.
