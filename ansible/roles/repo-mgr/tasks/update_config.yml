@@ -9,25 +9,25 @@
   replace:
     path: "{{repomgr_config_location}}/configuration.properties"
     regexp:  'database\.url=.*'
-    replace: 'database.url={{ repomgr_dabase_url }}'
+    replace: 'database.url={{ repomgr_database_url }}'
 
 - name: Update DB driver
   replace:
     path: "{{repomgr_config_location}}/configuration.properties"
     regexp:  'database\.driver=.*'
-    replace: 'database.driver={{ repomgr_dabase_driver }}'
+    replace: 'database.driver={{ repomgr_database_driver }}'
 
 - name: Update DB user
   replace:
     path: "{{repomgr_config_location}}/configuration.properties"
     regexp:  'database\.username=.*'
-    replace: 'database.username={{ repomgr_dabase_username }}'
+    replace: 'database.username={{ repomgr_database_username }}'
 
 - name: Update DB password
   replace:
     path: "{{repomgr_config_location}}/configuration.properties"
     regexp:  'database\.password=.*'
-    replace: 'database.password={{ repomgr_dabase_password }}'
+    replace: 'database.password={{ repomgr_database_password }}'
 
 - name: Update password for DB config page
   replace:

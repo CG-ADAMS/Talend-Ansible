@@ -52,7 +52,7 @@ app_install_systemd:  "yes"       # allowed values "yes" and "no"
 ##
 repomgr_internal_tomcat_location: "{{ install_prefix + '/{{rpm_folder}}/tomcat' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home }}"
 repomgr_webapps_location:         "{{ tac_webapps_location if repomgr_install_into_tac == 'yes' else repomgr_internal_tomcat_location + '/webapps' }}"
-repomgr_config_location:          "{{ repomgr_tomcat_location + '/WEB-INF/classes' }}"
+repomgr_config_location:          "{{ repomgr_webapps_location + '/org.talend.repositorymanager/WEB-INF/classes' }}"
 ##
 # End of internal configuration variables block
 ##########################
@@ -64,7 +64,7 @@ repomgr_config_location:          "{{ repomgr_tomcat_location + '/WEB-INF/classe
 #########################################
 
 # Database URL should be specified in JDBC format (default is MySQL on localhost)
-repomgr_dabase_url: 'jdbc:mysql://localhost:3306/repository_manager?useSSL=false'
+repomgr_database_url: 'jdbc:mysql://localhost:3306/repository_manager?useSSL=false'
 
 # Database driver (default is MySQL driver)
 repomgr_database_driver: 'com.mysql.cj.jdbc.Driver'
