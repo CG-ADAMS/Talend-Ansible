@@ -33,7 +33,7 @@
 - name: Check that parameter is not empty
   fail:
     msg: "Parameter {{item.name}} cannot be empty !"
-  when: item.name == ''
+  when: item.value == ''
   with_items:
     - { name: "repomgr_database_url",      value: "{{repomgr_database_url}}" }
     - { name: "repomgr_database_driver",   value: "{{repomgr_database_driver}}" }
