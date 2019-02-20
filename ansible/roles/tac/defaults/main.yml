@@ -48,7 +48,8 @@ tac_webapp_name: org.talend.administrator
 
 # Internal configuration variables, do not change this block
 #
-tac_config_location: "{{ install_prefix + '/tac/tomcat/webapps/' + tac_webapp_name + '/WEB-INF/classes' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home + '/webapps/' + tac_webapp_name + '/WEB-INF/classes' }}"
+tac_webapps_location: "{{ install_prefix + '/tac/tomcat/webapps' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home + '/webapps' }}"
+tac_config_location:  "{{ tac_webapps_location + '/' + tac_webapp_name + '/WEB-INF/classes' }}"
 #
 # End of internal configuration variables block
 
