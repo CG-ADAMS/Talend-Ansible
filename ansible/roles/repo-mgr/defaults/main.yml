@@ -50,7 +50,7 @@ app_install_systemd:  "yes"       # allowed values "yes" and "no"
 ##########################
 # Internal configuration variables, do not touch this block
 ##
-repomgr_internal_tomcat_location: "{{ install_prefix + '/{{rpm_folder}}/tomcat' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home }}"
+repomgr_internal_tomcat_location: "{{ install_prefix + '/repo-mgr/tomcat' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home }}"
 repomgr_webapps_location:         "{{ tac_webapps_location if repomgr_install_into_tac == 'yes' else repomgr_internal_tomcat_location + '/webapps' }}"
 repomgr_config_location:          "{{ repomgr_webapps_location + '/org.talend.repositorymanager/WEB-INF/classes' }}"
 ##

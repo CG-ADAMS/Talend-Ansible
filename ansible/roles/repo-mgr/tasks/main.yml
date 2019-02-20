@@ -27,6 +27,9 @@
 - include_tasks: ../../common/tasks/install_rpm.yml
   when: install_prefix != '/opt/talend'
 
+# Prepare application to be configured (unpack war files if needed)
+- import_tasks: prepare_app.yml
+
 # Update configuration
 - import_tasks: update_config.yml
 

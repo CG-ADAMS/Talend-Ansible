@@ -35,7 +35,7 @@
     msg: "Parameter {{item.name}} cannot be empty !"
   when: item.name == ''
   with_items:
-    - { name: "repomgr_dabase_url",        value: "{{repomgr_dabase_url}}" }
+    - { name: "repomgr_database_url",      value: "{{repomgr_database_url}}" }
     - { name: "repomgr_database_driver",   value: "{{repomgr_database_driver}}" }
     - { name: "repomgr_database_username", value: "{{repomgr_database_username}}" }
     - { name: "repomgr_database_password", value: "{{repomgr_database_password}}" }
