@@ -38,6 +38,5 @@
     - { name: "repomgr_database_url",      value: "{{repomgr_database_url}}" }
     - { name: "repomgr_database_driver",   value: "{{repomgr_database_driver}}" }
     - { name: "repomgr_database_username", value: "{{repomgr_database_username}}" }
-    - { name: "repomgr_database_password", value: "{{repomgr_database_password}}" }
     - { name: "repomgr_database_config_password", value: "{{repomgr_database_config_password}}" }
     - { name: "repomgr_localExtractPath",  value: "{{repomgr_localExtractPath}}" }
