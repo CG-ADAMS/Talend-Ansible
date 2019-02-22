@@ -12,7 +12,7 @@
   replace:
     path: "/etc/talend/streamsrunner/application.conf"
     regexp:  'play.server.http.host = .*'
-    replace: 'play.server.http.host = {{ play.server.http.host }}'
+    replace: 'play.server.http.host = {{ streamsrunner_server_host}}'
 
 - name: Update Spark Job Server host
   replace:

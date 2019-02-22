@@ -20,7 +20,7 @@ app_install_systemd:  "yes"       # allowed values "yes" and "no"
 
 # Basic Streamsrunner configurations
 streamsrunner_server_port: '9060'
-streamsrunner_host: 'localhost'
+streamsrunner_server_host: 'localhost'
 sjs_host: 'localhost'
 sjs_port: '8090'
 sjs_protocol: 'http'

@@ -1,5 +1,5 @@
 ---
-- hosts: tcomp-group
+- hosts: all
   remote_user: root
   roles:
     - java
