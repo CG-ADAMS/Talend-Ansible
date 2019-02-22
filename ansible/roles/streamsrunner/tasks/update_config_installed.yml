@@ -63,19 +63,19 @@
   replace:
     path: "/etc/talend/streamsrunner/application.conf"
     regexp:  'runner.properties = .*'
-    replace: 'runner.properties = {{ runner_properties }}'
+    replace: 'runner.properties = "{{ runner_properties }}"'
 
 - name: Update Runner Tuning properties
   replace:
     path: "/etc/talend/streamsrunner/application.conf"
     regexp:  'runner.tuning.properties = .*'
-    replace: 'runner.tuning.properties = {{ runner_tuning_properties }}'
+    replace: 'runner.tuning.properties = "{{ runner_tuning_properties }}"'
 
 - name: Update SparkRunner properties
   replace:
     path: "/etc/talend/streamsrunner/application.conf"
     regexp:  'runner.SparkRunner.properties = .*'
-    replace: 'runner.SparkRunner.properties = {{ sparkrunner_properties }}'
+    replace: 'runner.SparkRunner.properties = "{{ sparkrunner_properties }}"'
 
 
 
