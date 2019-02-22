@@ -11,6 +11,15 @@
 # All other parameters are from roles/sap-rfc-server/defaults/main.yml
 #
 
+- name: Install sapjco3.jar
+  when: sap_install_sapjco3_jar == 'yes'
+  copy:
+    src:  "{{sap_sapjco3_jar_path}}/sapjco3.jar"
+    dest: "{{install_prefix}}/sap-rfc-serv/{{sap_rfc_server_user_lib_folder}}/sapjco3.jar"
+    owner: "{{install_user}}"
+    group: "{{install_group}}"
+    mode: 0644
+
 - name: Update SAP gateway host
   replace:
     path: "{{install_prefix}}/sap-rfc-serv/conf/tsap-rfc-server.properties"

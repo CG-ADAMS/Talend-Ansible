@@ -5,6 +5,22 @@
 # SAP RFC server - specific parameters validation
 ######################################
 
+- name: Check sap_install_sapjco3_jar param
+  fail:
+    msg: "Wrong value for parameter sap_install_sapjco3_jar - allowed values are 'yes' and 'no'"
+  when: sap_install_sapjco3_jar != "yes" and sap_install_sapjco3_jar != "no"
+
+- name: Get sapjco3.jar file status
+  stat:
+    path: "{{sap_sapjco3_jar_path}}/sapjco3.jar"
+  register: sap_jar_file
+  when: sap_install_sapjco3_jar == 'yes'
+
+- name: Check sap_sapjco3_jar_path param
+  fail:
+    msg: "Wrong value for for sap_sapjco3_jar_path param - file sapjco3.jar does not exist at that location"
+  when: sap_install_sapjco3_jar == 'yes' and not sap_jar_file.stat.exists
+
 # Check port-type parameter: sap_rfc_server_shutdown_port
 - name: Check port-type parameters
   fail:

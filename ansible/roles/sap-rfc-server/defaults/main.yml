@@ -20,6 +20,19 @@ app_install_systemd:  "yes"
 # Attention: empty values are used to reset to the "default" value
 #            (in most cases it will comment out the entry in config file)
 ##########################################################################
+
+# Important: SAP RFC Server will not be usable without sapjco3.jar
+# It is not delivered together with SAP RFC Server RPM package because of
+#    license restrictions.
+# Customer may download it separately and then it can be deployed automatically
+#    during installation with the following parameters:
+#
+# sap_install_sapjco3_jar:  (yes/no)
+# sap_sapjco3_jar_path:     the path to sapjco3.jar on a local (Ansible master) host
+
+sap_install_sapjco3_jar: "no"
+sap_sapjco3_jar_path:    "/mnt/share/path-to-sapjco3-jar-file"
+
 # -------------------------------------------------------------------------
 # SAP JCO Server Section
 # -------------------------------------------------------------------------
