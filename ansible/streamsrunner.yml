@@ -1,5 +1,5 @@
 ---
-- hosts: streamsrunner_group
+- hosts: streamsrunner-group
   remote_user: root
   roles:
     - java
