@@ -39,12 +39,12 @@
     replace: 'jco.server.progid={{ sap_jco_server_progid }}'
   when: sap_jco_server_progid != 'TALEND'
 
-- name: Update the program ID (non-default)
+- name: Update the program ID (default)
   replace:
     path: "{{install_prefix}}/sap-rfc-serv/conf/tsap-rfc-server.properties"
     regexp:  '(#)?\s*jco.server.progid=.*'
     replace: '#jco.server.progid={{ sap_jco_server_progid }}'
-  when: sap_jco_server_progid != 'TALEND'
+  when: sap_jco_server_progid == 'TALEND'
 
 - name: Update the program ID for IDOC service
   replace:
