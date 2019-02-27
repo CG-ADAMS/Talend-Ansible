@@ -26,6 +26,7 @@ Installing Talend applications using Ansible require CentOS 7.X as operating sys
 
 1. Specify your credentials and the version of Talend applications to install in the *ansible/group_vars/all* file. These parameters are used to access the RPM repository.
 2. Configure the playbook you want to install by specifying:
+
   1. the **hosts** to install the roles on. Hosts must be defined in `/etc/ansible/hosts` on the master node.
   2. the **remote_user** name. Make sure that the user has the required permissions to install applications on all hosts.
   3. the **roles** to install, by installation order.
