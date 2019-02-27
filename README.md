@@ -51,6 +51,7 @@ Installing Talend applications using Ansible require CentOS 7.X as operating sys
     rt_master_password: 'password'
 ```
 Sample playbooks are available [here](ansible/examples) or [here](ansible).
+
 3. Configure the installation parameters as well as the configuration of each role using their respective *defaults/main.yml* file. <br/> Variables can be overwritten if they are set differently directly in the playbook.
 4. Run the playbook: <br/> `ansible-playbook <playbook>.yml`
 
