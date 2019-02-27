@@ -26,30 +26,30 @@ Installing Talend applications using Ansible require CentOS 7.X as operating sys
 
 1. Specify your credentials and the version of Talend applications to install in the *ansible/group_vars/all* file. These parameters are used to access the RPM repository.
 2. Configure the playbook you want to install by specifying:
-  1. the **hosts** to install the roles on. Hosts must be defined in `/etc/ansible/hosts` on the master node.
-  2. the **remote_user** name. Make sure that the user has the required permissions to install applications on all hosts.
-  3. the **roles** to install, by installation order.
-  4. the **vars** to overwrite with a new value for that specific playbook. Adding variables to the playbook is optional. <br/>
-  For example:
-```yml
-  hosts: tac-group
-  remote_user: root
-  roles:
-    - java
-    - talend-repo
-    - runtime
-  vars:
-    rt_http_port: 8041
-    rt_https_port: 9002
-    rt_ssh_port: 8102
-    rt_rmi_registry_port: 1100
-    rt_rmi_server_port: 44445
-    rt_js_command_server_port: 8010
-    rt_js_file_server_port: 8011
-    rt_js_monitoring_port: 8898
-    rt_js_process_message_port: 8556
-    rt_master_password: 'password'
-```
+    1. the **hosts** to install the roles on. Hosts must be defined in `/etc/ansible/hosts` on the master node.
+    2. the **remote_user** name. Make sure that the user has the required permissions to install applications on all hosts.
+    3. the **roles** to install, by installation order.
+    4. the **vars** to overwrite with a new value for that specific playbook. Adding variables to the playbook is optional. <br/>
+    For example:
+    ```yml
+      hosts: tac-group
+      remote_user: root
+      roles:
+        - java
+        - talend-repo
+        - runtime
+      vars:
+        rt_http_port: 8041
+        rt_https_port: 9002
+        rt_ssh_port: 8102
+        rt_rmi_registry_port: 1100
+        rt_rmi_server_port: 44445
+        rt_js_command_server_port: 8010
+        rt_js_file_server_port: 8011
+        rt_js_monitoring_port: 8898
+        rt_js_process_message_port: 8556
+        rt_master_password: 'password'
+    ```
 Sample playbooks are available [here](ansible/examples) or [here](ansible).
 
 3. Configure the installation parameters as well as the configuration of each role using their respective *defaults/main.yml* file. <br/> Variables can be overwritten if they are set differently directly in the playbook.
