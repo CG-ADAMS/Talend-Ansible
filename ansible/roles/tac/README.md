@@ -134,4 +134,4 @@ Example Playbook
 License
 -------
 
-BSD
+Apache licence.
