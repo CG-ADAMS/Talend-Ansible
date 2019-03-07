@@ -95,4 +95,4 @@ Also the following third-party components can be installed:
 
 # Licence
 
-Apache licence.
+Apache license.

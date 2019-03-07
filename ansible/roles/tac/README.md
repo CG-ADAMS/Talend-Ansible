@@ -134,4 +134,4 @@ Example Playbook
 License
 -------
 
-Apache licence.
+Apache license.
