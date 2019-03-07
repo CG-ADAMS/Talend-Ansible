@@ -7,6 +7,11 @@ app_name:    'Talend LogServer'
 rpm_name:    'talend-logserver'
 rpm_folder:  'logserver'
 
+#####
+# Installation as systemd service
+#####
+app_install_systemd:  "yes"       # allowed values "yes" and "no"
+
 ######################################################
 #
 # IMPORTANT: Empty values ('') means the defaults settings (in most cases, entries in application
