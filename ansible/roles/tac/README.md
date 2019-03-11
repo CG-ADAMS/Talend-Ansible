@@ -130,8 +130,3 @@ Example Playbook
       - tomcat
       - tac
   ```
-
-License
--------
-
-Apache license.
