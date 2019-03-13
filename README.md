@@ -92,3 +92,7 @@ Also the following third-party components can be installed:
 * **[mongodb](ansible/roles/mongodb)**: MongoDB server (required by **tds**, **tdp**, **tdq**)
 * **[kafka](ansible/roles/kafka)**: Apache Kafka server (required by **tds**, **tdp**)
 * **[nexus](ansible/roles/nexus)**: Nexus Repository Manager.
+
+# Licence
+
+Apache license.
