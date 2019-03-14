@@ -34,3 +34,4 @@
   environment:
     TALEND_INSTALL_USER: '{{ install_user }}'
     TALEND_INSTALL_GROUP: '{{ install_group }}'
+    JAVA_HOME:            '{{ java_dir.stdout }}'

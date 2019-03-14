@@ -9,3 +9,4 @@
     TALEND_INSTALL_USER: '{{ install_user }}'
     TALEND_INSTALL_GROUP: '{{ install_group }}'
     TALEND_MWFL_PORT:    '{{ mwfl_port }}'
+    JAVA_HOME:              "{{ java_dir.stdout }}"

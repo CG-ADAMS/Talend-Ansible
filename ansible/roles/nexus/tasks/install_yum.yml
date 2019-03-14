@@ -12,3 +12,4 @@
     TALEND_INSTALL_SYSTEMD: "{{ '1' if app_install_systemd == 'yes' else '0' }}"
     NEXUS_HOST:             "{{ '' if nexus_host == '0.0.0.0' else nexus_host }}"
     NEXUS_PORT:             "{{ '' if nexus_port == '8081'    else nexus_port }}"
+    JAVA_HOME:              "{{ java_dir.stdout }}"
