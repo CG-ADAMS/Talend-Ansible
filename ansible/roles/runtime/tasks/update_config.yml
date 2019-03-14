@@ -91,7 +91,7 @@
     path: "{{install_prefix}}/runtime/etc/users.properties"
     regexp:  '^({{ item }}\s*=\s*)[^,]*(,.*)$'
     replace: '\1{{ rt_master_password }}\2'
-  loop:
+  with_items:
      - tadmin
      - tesb
      - karaf
