@@ -17,3 +17,4 @@
     TALEND_MONGODB_TDP_PASS: "{{ mongodb_tdp_password }}"
     TALEND_MONGODB_TDQ_USER: "{{ mongodb_tdq_user }}"
     TALEND_MONGODB_TDQ_PASS: "{{ mongodb_tdq_password }}"
+    JAVA_HOME:              "{{ java_dir.stdout }}"

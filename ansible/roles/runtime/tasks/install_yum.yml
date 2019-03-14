@@ -9,5 +9,4 @@
     TALEND_INSTALL_USER: '{{ install_user }}'
     TALEND_INSTALL_GROUP: '{{ install_group }}'
     TALEND_INSTALL_SYSTEMD: "{{ '1' if app_install_systemd == 'yes' else '0' }}"
-    JAVA_HOME: '{{java_dir.stdout}}'
-    
+    JAVA_HOME:              "{{ java_dir.stdout }}"
