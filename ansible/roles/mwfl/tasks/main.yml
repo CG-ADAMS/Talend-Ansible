@@ -6,3 +6,6 @@
 
 - include_tasks: install_rpm.yml
   when: install_prefix != '/opt/talend'
+
+# Starting systemd service
+- include_tasks: ../../common/tasks/start_service.yml
