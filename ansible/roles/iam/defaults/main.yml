@@ -70,7 +70,7 @@ iam_language: "en"
 iam_tds_postlogout_url: "http://localhost:19999/"
 
 # IAM - TDP post-logout URL
-iam_tdp_postlogout_url: "http://localhost:99999/"      
+iam_tdp_postlogout_url: "http://localhost:9999/"      
 
 # IAM - MDM post-logout URL
 iam_mdm_postlogout_url: "http://localhost:8180/" 
