@@ -72,3 +72,21 @@
     path: "{{ iam_tomcat_location }}/bin/setenv.sh"
     regexp:  '-Dspring.mvc.locale=..'
     replace: '-Dspring.mvc.locale={{iam_language}}'
+
+- name: Update MDM post-logout URL (postlogout)
+  replace:
+    path: "{{ iam_clients_location }}/mdm-client.json"
+    regexp:  '"post_logout_redirect_uris" : .*'
+    replace: '"post_logout_redirect_uris" : [ "{{iam_mdm_postlogout_url}}talendmdm/", "http://localhost:{{iam_mdm_postlogon_port}}/talendmdm/", "http://127.0.0.1:{{iam_mdm_postlogon_port}}/talendmdm/" ],'
+
+- name: Update MDM post-logout URL (redirect_uris)
+  replace:
+    path: "{{ iam_clients_location }}/mdm-client.json"
+    regexp:  '"redirect_uris" : .*'
+    replace: '"redirect_uris" : [ "{{iam_mdm_postlogout_url}}talendmdm/login", "http://localhost:{{iam_mdm_postlogon_port}}/talendmdm/login", "http://127.0.0.1:{{iam_mdm_postlogon_port}}/talendmdm/login" ],'
+
+- name: Update MDM post-logout URL (backchannel_logout_uri)
+  replace:
+    path: "{{ iam_clients_location }}/mdm-client.json"
+    regexp:  '"backchannel_logout_uri" : .*'
+    replace: '"backchannel_logout_uri" : "{{iam_mdm_postlogout_url}}talendmdm/logout-op",'

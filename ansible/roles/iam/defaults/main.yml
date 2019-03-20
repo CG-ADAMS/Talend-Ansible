@@ -32,6 +32,7 @@ app_install_systemd:  "yes"       # allowed values "yes" and "no"
 iam_base_location: "{{ install_prefix + '/iam' }}"
 iam_tomcat_location: "{{ install_prefix + '/iam/tomcat' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home }}"
 iam_config_location: "{{ iam_tomcat_location + '/conf' }}"
+iam_clients_location: "{{ iam_tomcat_location + '/clients' }}"
 iam_webapps_location: "{{ iam_tomcat_location + '/webapps' }}"
 ##
 # End of internal configuration variables block
@@ -73,3 +74,10 @@ iam_tdp_postlogout_url: "http://localhost:99999/"
 
 # IAM - MDM post-logout URL
 iam_mdm_postlogout_url: "http://localhost:8180/" 
+
+########################
+# Internal configuration section, do not delete !!!
+########################
+iam_tds_postlogon_port: "{{ iam_tds_postlogout_url | urlsplit('port') }}"
+iam_tdp_postlogon_port: "{{ iam_tdp_postlogout_url | urlsplit('port') }}"
+iam_mdm_postlogon_port: "{{ iam_mdm_postlogout_url | urlsplit('port') }}"

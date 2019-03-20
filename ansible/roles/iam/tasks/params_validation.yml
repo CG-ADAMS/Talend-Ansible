@@ -29,3 +29,21 @@
     - { name: "iam_tdp_postlogout_url", value: "{{iam_tdp_postlogout_url}}" }
     - { name: "iam_mdm_postlogout_url", value: "{{iam_mdm_postlogout_url}}" }
     - { name: "iam_hostname",           value: "{{iam_hostname}}" }
+
+- name: Check post-logout URLs format
+  fail:
+    msg: "Post-logout URL {{item.name}} must be ended with slash, but it is not: {{item.value}}"
+  when: item.value[-1] != '/'
+  with_items:
+    - { name: "iam_tds_postlogout_url", value: "{{iam_tds_postlogout_url}}" }
+    - { name: "iam_tdp_postlogout_url", value: "{{iam_tdp_postlogout_url}}" }
+    - { name: "iam_mdm_postlogout_url", value: "{{iam_mdm_postlogout_url}}" }
+
+- name: Check post-logout URLs ports
+  fail:
+    msg: "Post-logout URL {{item.name}} does not have a valid port number, detected value: {{ item.value | urlsplit('port') }}"
+  when: item.value | urlsplit('port') > 65535 or item.value | urlsplit('port') < 1
+  with_items:
+    - { name: "iam_tds_postlogout_url", value: "{{iam_tds_postlogout_url}}" }
+    - { name: "iam_tdp_postlogout_url", value: "{{iam_tdp_postlogout_url}}" }
+    - { name: "iam_mdm_postlogout_url", value: "{{iam_mdm_postlogout_url}}" }
