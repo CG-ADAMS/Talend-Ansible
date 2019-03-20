@@ -165,7 +165,7 @@
 
 #
 # Validation for http appender
-#  
+#
 - name: Show error that no value is specified for tac_appender_http_host
   fail:
     msg: No values is specified for "tac_appender_http_host"
@@ -175,13 +175,24 @@
   fail:
     msg: Wrong value for parameter "tac_appender_http_port", must be a valid number
   when: tac_appender_http_port|int == 0  
-  
+
 - name: Show error about wrong value for parameter tac_appender_http_port, must be a valid number
   fail:
     msg: Wrong value for parameter "tac_appender_http_port", must be a valid TCP/IP port number
   when: tac_appender_http_port|int  > 65535 or tac_appender_http_port|int < 0
-  
+
 - name: Show error that no value is specified for tac_appender_http_username or tac_appender_http_password
   fail:
     msg: No values is specified for "tac_appender_http_username"/"tac_appender_http_password"
-  when: ( tac_appender_http_username != "" and tac_appender_http_password == "" ) or ( tac_appender_http_username == "" and tac_appender_http_password != "" ) 
+  when: ( tac_appender_http_username != "" and tac_appender_http_password == "" ) or ( tac_appender_http_username == "" and tac_appender_http_password != "" )
+
+- name: Get info about license file
+  stat:
+    path: "{{ tac_license_file }}"
+  register: tac_license_file_stat
+  when: tac_install_license == "yes"
+
+- name: Show error about inaccessible license file
+  fail:
+    msg: "License file for TAC is not available: {{ tac_license_file }}"
+  when: tac_install_license == "yes" and not tac_license_file_stat.stat.exists
