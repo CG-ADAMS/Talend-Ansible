@@ -73,20 +73,50 @@
     regexp:  '-Dspring.mvc.locale=..'
     replace: '-Dspring.mvc.locale={{iam_language}}'
 
-- name: Update MDM post-logout URL (postlogout)
-  replace:
-    path: "{{ iam_clients_location }}/mdm-client.json"
-    regexp:  '"post_logout_redirect_uris" : .*'
-    replace: '"post_logout_redirect_uris" : [ "{{iam_mdm_postlogout_url}}talendmdm/", "http://localhost:{{iam_mdm_postlogon_port}}/talendmdm/", "http://127.0.0.1:{{iam_mdm_postlogon_port}}/talendmdm/" ],'
+#
+# Updating clients json files
+#
+# For mdm-client.json ...
+- name: Load clients/mdm-client.json
+  slurp:
+    src: "{{ iam_clients_location }}/mdm-client.json"
+  register: iam_mdm_client_json_var
 
-- name: Update MDM post-logout URL (redirect_uris)
-  replace:
-    path: "{{ iam_clients_location }}/mdm-client.json"
-    regexp:  '"redirect_uris" : .*'
-    replace: '"redirect_uris" : [ "{{iam_mdm_postlogout_url}}talendmdm/login", "http://localhost:{{iam_mdm_postlogon_port}}/talendmdm/login", "http://127.0.0.1:{{iam_mdm_postlogon_port}}/talendmdm/login" ],'
+- name: "Update mdm-client.json: post_logout_redirect_uris (if localhost)"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var.content | b64decode | from_json | combine( { 'post_logout_redirect_uris': ( 'http://localhost:' + iam_mdm_postlogon_port +'/talendmdm/', 'http://127.0.0.1:' + iam_mdm_postlogon_port + '/talendmdm/') } ) | to_nice_json  }}"
+  when: iam_mdm_postlogon_host == 'localhost'
 
-- name: Update MDM post-logout URL (backchannel_logout_uri)
-  replace:
-    path: "{{ iam_clients_location }}/mdm-client.json"
-    regexp:  '"backchannel_logout_uri" : .*'
-    replace: '"backchannel_logout_uri" : "{{iam_mdm_postlogout_url}}talendmdm/logout-op",'
+- name: "Update mdm-client.json: post_logout_redirect_uris (if non-localhost and short host)"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var.content | b64decode | from_json | combine( { 'post_logout_redirect_uris': ( iam_mdm_postlogout_url_lc + 'talendmdm/', 'http://localhost:' + iam_mdm_postlogon_port +'/talendmdm/', 'http://127.0.0.1:' + iam_mdm_postlogon_port + '/talendmdm/') } ) | to_nice_json  }}"
+  when: iam_mdm_postlogon_host != 'localhost' and iam_mdm_postlogon_host == iam_mdm_postlogon_shorthost
+
+- name: "Update mdm-client.json: post_logout_redirect_uris (if non-localhost and FQDN host)"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var.content | b64decode | from_json | combine( { 'post_logout_redirect_uris': ( iam_mdm_postlogout_url_lc + 'talendmdm/', 'http://' + iam_mdm_postlogon_shorthost + ':' + iam_mdm_postlogon_port +'/talendmdm/', 'http://localhost:' + iam_mdm_postlogon_port +'/talendmdm/', 'http://127.0.0.1:' + iam_mdm_postlogon_port + '/talendmdm/') } ) | to_nice_json  }}"
+  when: iam_mdm_postlogon_host != 'localhost' and iam_mdm_postlogon_host != iam_mdm_postlogon_shorthost
+
+- name: "Update mdm-client.json: redirect_uris (if localhost)"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var | from_json | combine( { 'redirect_uris': ( 'http://localhost:' + iam_mdm_postlogon_port +'/talendmdm/login', 'http://127.0.0.1:' + iam_mdm_postlogon_port + '/talendmdm/login') } ) | to_nice_json  }}"
+  when: iam_mdm_postlogon_host == 'localhost'
+
+- name: "Update mdm-client.json: redirect_uris (if localhost and short host)"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var | from_json | combine( { 'redirect_uris': ( iam_mdm_postlogout_url_lc + 'talendmdm/login', 'http://localhost:' + iam_mdm_postlogon_port +'/talendmdm/login', 'http://127.0.0.1:' + iam_mdm_postlogon_port + '/talendmdm/login') } ) | to_nice_json  }}"
+  when: iam_mdm_postlogon_host != 'localhost' and iam_mdm_postlogon_host == iam_mdm_postlogon_shorthost
+
+- name: "Update mdm-client.json: redirect_uris (if localhost and FQDN host)"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var | from_json | combine( { 'redirect_uris': ( iam_mdm_postlogout_url_lc + 'talendmdm/login', 'http://' + iam_mdm_postlogon_shorthost + ':' + iam_mdm_postlogon_port +'/talendmdm/login', 'http://localhost:' + iam_mdm_postlogon_port +'/talendmdm/login', 'http://127.0.0.1:' + iam_mdm_postlogon_port + '/talendmdm/login') } ) | to_nice_json  }}"
+  when: iam_mdm_postlogon_host != 'localhost' and iam_mdm_postlogon_host != iam_mdm_postlogon_shorthost
+
+- name: "Update mdm-client.json: backchannel_logout_uri"
+  set_fact:
+    iam_mdm_client_json_var: "{{ iam_mdm_client_json_var | from_json | combine( { 'backchannel_logout_uri': iam_mdm_postlogout_url_lc + 'talendmdm/logout-op' } ) | to_nice_json  }}"
+
+- name: Update mdm-client.json on disk
+  copy:
+    content: "{{ iam_mdm_client_json_var | from_json | to_nice_json }}"
+    dest:    "{{ iam_clients_location }}/mdm-client.json"
