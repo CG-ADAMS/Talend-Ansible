@@ -79,7 +79,7 @@ iam_mdm_postlogout_url: "http://localhost:8180/"
 # Internal configuration section, do not delete !!!
 ########################
 iam_tds_postlogout_url_lc: "{{ iam_tds_postlogout_url | lower }}"
-iam_tdp_postlogout_url_lc: "{{ iam_tdp_postlogout_url | lower }}"
+iam_tdp_postlogout_url_lc: "{{ iam_tdp_postlogout_url | lower | regex_replace( '/$' ) }}"
 iam_mdm_postlogout_url_lc: "{{ iam_mdm_postlogout_url | lower }}"
 
 iam_tds_postlogon_port: "{{ iam_tds_postlogout_url_lc | urlsplit('port') }}"
