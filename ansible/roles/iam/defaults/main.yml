@@ -32,6 +32,7 @@ app_install_systemd:  "yes"       # allowed values "yes" and "no"
 iam_base_location: "{{ install_prefix + '/iam' }}"
 iam_tomcat_location: "{{ install_prefix + '/iam/tomcat' if app_use_talend_tomcat == 'yes' or app_tomcat_mode == 'shared' else app_tomcat_home }}"
 iam_config_location: "{{ iam_tomcat_location + '/conf' }}"
+iam_clients_location: "{{ iam_tomcat_location + '/clients' }}"
 iam_webapps_location: "{{ iam_tomcat_location + '/webapps' }}"
 ##
 # End of internal configuration variables block
@@ -69,7 +70,25 @@ iam_language: "en"
 iam_tds_postlogout_url: "http://localhost:19999/"
 
 # IAM - TDP post-logout URL
-iam_tdp_postlogout_url: "http://localhost:99999/"      
+iam_tdp_postlogout_url: "http://localhost:9999/"
 
 # IAM - MDM post-logout URL
-iam_mdm_postlogout_url: "http://localhost:8180/" 
+iam_mdm_postlogout_url: "http://localhost:8180/"
+
+########################
+# Internal configuration section, do not delete !!!
+########################
+iam_tds_postlogout_url_lc: "{{ iam_tds_postlogout_url | lower }}"
+iam_tdp_postlogout_url_lc: "{{ iam_tdp_postlogout_url | lower | regex_replace( '/$' ) }}"
+iam_mdm_postlogout_url_lc: "{{ iam_mdm_postlogout_url | lower }}"
+
+iam_tds_postlogon_port: "{{ iam_tds_postlogout_url_lc | urlsplit('port') }}"
+iam_tdp_postlogon_port: "{{ iam_tdp_postlogout_url_lc | urlsplit('port') }}"
+iam_mdm_postlogon_port: "{{ iam_mdm_postlogout_url_lc | urlsplit('port') }}"
+iam_tds_postlogon_host: "{{ iam_tds_postlogout_url_lc | urlsplit('hostname') }}"
+iam_tdp_postlogon_host: "{{ iam_tdp_postlogout_url_lc | urlsplit('hostname') }}"
+iam_mdm_postlogon_host: "{{ iam_mdm_postlogout_url_lc | urlsplit('hostname') }}"
+
+iam_tds_postlogon_shorthost: "{{ iam_tds_postlogout_url_lc | urlsplit('hostname') | regex_replace('(.*?)(\\..*)', '\\1' ) }}"
+iam_tdp_postlogon_shorthost: "{{ iam_tdp_postlogout_url_lc | urlsplit('hostname') | regex_replace('(.*?)(\\..*)', '\\1' ) }}"
+iam_mdm_postlogon_shorthost: "{{ iam_mdm_postlogout_url_lc | urlsplit('hostname') | regex_replace('(.*?)(\\..*)', '\\1' ) }}"
