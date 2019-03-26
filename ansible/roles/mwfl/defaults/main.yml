@@ -6,6 +6,7 @@
 app_name:    'Talend MDM Workflow Server'
 rpm_name:    'talend-mwfl'
 rpm_folder:  'mwfl'
+app_service: 'talend-mwfl'
 
 # MWFL-specific properties
 
