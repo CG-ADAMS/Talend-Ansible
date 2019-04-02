@@ -30,7 +30,7 @@ mongodb_port: 27017
 mongodb_enhancedsecurity: "yes"
 
 
-# User and passwords for TDS, TDP and TDQ
+# User and passwords for TDS, TDP and TSD
 # This information can be specified only for installation. Changing it later will have no effect
 # If you do not want to use particular user, use "-" as user name.
 # For example:
@@ -42,5 +42,5 @@ mongodb_tds_password: "duser"
 mongodb_tdp_user:     "dataprep-user"
 mongodb_tdp_password: "duser"
 
-mongodb_tdq_user:     "dqdict-user"
-mongodb_tdq_password: "duser"
+mongodb_tsd_user:     "tsd-user"
+mongodb_tsd_password: "duser"

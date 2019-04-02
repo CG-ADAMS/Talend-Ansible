@@ -82,15 +82,15 @@ The applications which can be installed from this repository are the following. 
 * **[tcomp](ansible/roles/tcomp)**: Talend Component Server
 * **[streamsrunner](ansible/roles/streamsrunner)**: Streams Runner
 * **[tds](ansible/roles/tds)**: Talend Data Stewardship (TDS)
-* **[tdq](ansible/roles/tdq)**: Talend Dictionary Service
+* **[tsd](ansible/roles/tsd)**: Talend Semantic Dictionary (TSD)
 * **[sap-rfc-server](ansible/roles/sap-rfc-server)**: Talend SAP RFC Server
 * **[filebeat](ansible/roles/filebeat)**: Talend Filebeat service
 
 Also the following third-party components can be installed:
 
-* **[tomcat](ansible/roles/tomcat)**: Apache Tomcat server (required by **tac**, **iam**, **tds**, **tdq**)
-* **[mongodb](ansible/roles/mongodb)**: MongoDB server (required by **tds**, **tdp**, **tdq**)
-* **[kafka](ansible/roles/kafka)**: Apache Kafka server (required by **tds**, **tdp**)
+* **[tomcat](ansible/roles/tomcat)**: Apache Tomcat server (required by **tac**, **iam**, **tds**, **tsd**)
+* **[mongodb](ansible/roles/mongodb)**: MongoDB server (required by **tds**, **tdp**, **tsd**)
+* **[kafka](ansible/roles/kafka)**: Apache Kafka server (required by **tds**, **tdp**, **tsd**)
 * **[nexus](ansible/roles/nexus)**: Nexus Repository Manager.
 
 # Licence

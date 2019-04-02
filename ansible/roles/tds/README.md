@@ -50,13 +50,13 @@ List of dependancies (playbooks) :
 - TAC
 - MongoDB
 - Kafka
-- TDQ (Talend Dictionary Service - optional, only in if you have the licence of this module)
+- TSD (Talend Semantic Dictionary - optional, only in if you have the licence of this module)
 - TDP (Talend Data Preparation - optional, only in if you have the licence of this module and you want to use the app switcher on the TDS interface)
 
 Example Playbook
 ----------------
 
-Example of how to use playbook (you can remove tdq if you don't have the licence) :
+Example of how to use playbook (you can remove tsd if you don't have the licence) :
 
     - hosts: tds-group
       remote_user: root
@@ -68,7 +68,7 @@ Example of how to use playbook (you can remove tdq if you don't have the licence
         - kafka
         - mongodb
         - tac
-        - tdq
+        - tsd
         - tds
 
 License
