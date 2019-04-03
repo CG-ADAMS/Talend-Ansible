@@ -6,9 +6,10 @@
 #############################################
 # Do not modify this part
 app_name: 'Talend Semantic Dictionary'
+# TODO : change rpm variables to tsd
 rpm_name: 'talend-dictionary-service'
-rpm_folder:  'tsd'
-app_service: 'talend-tsd'
+rpm_folder:  'dictionary-service'
+app_service: 'talend-dictionary-service'
 
 
 #############################################

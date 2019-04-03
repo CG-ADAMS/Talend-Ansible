@@ -24,10 +24,10 @@
 
 
 # verify flag yes/no have a correct value and are non empty
-- name: Show error about wrong value for parameter tds_use_semantic
+- name: Show error about wrong value for parameter tds_use_semantic_dictionary
   fail:
-    msg: Wrong value for parameter "tds_use_semantic", must be 'yes' or 'no'
-  when: tds_use_semantic != "no" and tds_use_semantic != "yes"
+    msg: Wrong value for parameter "tds_use_semantic_dictionary", must be 'yes' or 'no'
+  when: tds_use_semantic_dictionary != "no" and tds_use_semantic_dictionary != "yes"
 
 - name: Show error about wrong value for parameter tds_use_tdp_switch
   fail:
@@ -42,11 +42,11 @@
   when: tds_use_tdp_switch == "yes" and tds_front_tdp_url == ""
 
 
-# specific non empty check for tds_semantic_url
-- name: Show error that no value is specified for tds_semantic_url when tds_use_semantic is 'yes'
+# specific non empty check for tds_semantic_dictionary_url
+- name: Show error that no value is specified for tds_semantic_dictionary_url when tds_use_semantic_dictionary is 'yes'
   fail:
-    msg: "{{ app_name }} - no values is specified for 'tds_semantic_url'"
-  when: tds_use_semantic == "yes" and tds_semantic_url == ""
+    msg: "{{ app_name }} - no values is specified for 'tds_semantic_dictionary_url'"
+  when: tds_use_semantic_dictionary == "yes" and tds_semantic_dictionary_url == ""
 
 
 # verify the port parameters (integer and correct port number)
@@ -59,7 +59,7 @@
     - { name: 'tds_mongo_port', value: "{{ tds_mongo_port }}"}
 
 - name: Show error about wrong value for parameter {{ item.name }}, must be a valid TCP/IP port number
-  when: item.value|int > 65535 or item.value|int < 0"
+  when: item.value|int > 65535 or item.value|int < 0
   fail:
     msg: "{{ app_name }} - wrong value for parameter '{{ item.name }}', must be a valid TCP/IP port number"
   with_items:

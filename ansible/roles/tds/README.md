@@ -20,8 +20,8 @@ Parameter                             | First Install Only | Description        
 `app_use_talend_tomcat`|Yes|Use Talend Tomcat : "yes" or "no".                      | yes
 `app_tomcat_port`      |Yes|Port of Tomcat                                          | 19999
 `app_tomcat_home`      |Yes|Path to Tomcat home (only if you want to use a custom tomcat - app_use_talend_tomcat = no)| /opt/tomcat
-`app_tomcat_mode`      |Yes|Tomcat mode : "direct" or "shared" (only if you want to use a custom tomcat - app_use_talend_tomcat = no)                      | direct
-`app_tomcat_setup`     |Yes|TODO : to be confirmed                      | no
+`app_tomcat_mode`      |Yes|Tomcat mode : "direct" or "shared" (only if you want to use a custom tomcat - app_use_talend_tomcat = no) | direct
+`app_tomcat_setup`     |Yes|Let RPM to update customer's tomcat configuration like ports (only if you want to use a custom tomcat - app_use_talend_tomcat = no) | no
 `tds_kafka_host`       |No |Hostname where Kafka broker is installed                | localhost
 `tds_kafka_port`       |No |Port of Kafka broker                                    | 9092
 `tds_mongo_host`       |No |Hostname where MongoDB is installed                     | localhost
@@ -34,8 +34,8 @@ Parameter                             | First Install Only | Description        
 `tds_security_oidc_user_auth_url` |No|URL to your Talend Identity and Access Management User Authentication | <http://localhost:9080/oidc>
 `tds_oidc_id`          |No |Talend Identity and Access Management OIDC client identifier | tl6K6ac7tSE-LQ
 `tds_oidc_secret`      |No |Talend Identity and Access Management OIDC password     | sLbyFKTzM8F0dTL10mHd3A
-`tds_use_semantic`     |No |Enable link with Talend Dictionary Service (Semantic) : "yes" (only if you have a licence) or "no" | yes
-`tds_semantic_port`    |No |URL of Talend Dictionary Service (Semantic)             | <http://localhost:8187/>
+`tds_use_semantic_dictionary` |No |Enable link with Talend Semantic Dictionary : "yes" (only if you have a licence) or "no" | yes
+`tds_semantic_dictionary_url` |No |URL of Talend Semantic Dictionary                | <http://localhost:8187/>
 `tds_use_tdp_switch`   |No |Enable Talend Data Preparation  app switch : "yes" (only if you have a licence) or "no" | no
 `tds_front_tdp_url`    |No |URL of Talend Data Preparation                          | <http://localhost:9999>
 

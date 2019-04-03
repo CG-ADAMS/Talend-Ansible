@@ -4,7 +4,7 @@
 #############################################
 # Read only variables
 #############################################
-# Do not modifie this part
+# Do not modify this part
 app_name: 'Talend Data Stewarship'
 rpm_name: 'talend-tds'
 rpm_folder:  'tds'
@@ -31,13 +31,17 @@ app_tomcat_port:  19999         # app_tomcat_port is used only if app_use_talend
 # The following variables will be taken in account only if app_use_talend_tomcat == "no"
 app_tomcat_home:  "/opt/tomcat"   # home folder for customer's tomcat
 app_tomcat_mode:  "direct"        # can be one of "direct" or "shared"
-# TODO : this need to be 1 or 0 to work with rpm. not "yes or no" or do a conversion in instal_*.yml
 app_tomcat_setup: "no"            # whether to update customer's tomcat configuration (ports)
 
 
 #############################################
 # First install and upgradable variables
 #############################################
+#####
+# hostname (domain name)
+#####
+#TODO : to be confirmed  
+# tds_hostname: "localhost"
 
 #####
 # Kafka variables
@@ -53,7 +57,6 @@ tds_mongo_port: 27017
 tds_mongo_database: "tds"
 tds_mongo_username: "tds-user"
 # Example password. Must be changed for security things
-# TODO : set to empty ?
 tds_mongo_password: "duser"
 
 #####
@@ -69,19 +72,19 @@ tds_oidc_id: "tl6K6ac7tSE-LQ"
 tds_oidc_secret: "sLbyFKTzM8F0dTL10mHd3A"
 
 #####
-# "Talend Dictionary Service" (equiv. Semantic Service) link
+# "Talend Semantic Dictionary" link
 #####
-# If you have a Talend Dictionary Service (Semantic) licence, set to "yes" and tds_semantic_port will be used
-tds_use_semantic: "yes"
+# If you have a Talend Semantic Dictionary licence, set to "yes" and tds_semantic_dictionary_url will be used
+tds_use_semantic_dictionary: "yes"
 # Url of Talend Dictionary Service
 # TODO : use port or a complete URL ?
-tds_semantic_url: "http://localhost:8187/"
+tds_semantic_dictionary_url: "http://localhost:8187/"
 
 #####
 # "Talend Data Preparation" link
 #####
 # If you have a Talend Dictionary Perparation (TDP) licence, set this one to "yes" to activate the switch between TDS & TDP
-tds_use_tdp_switch: "no"
+tds_use_tdp_switch: "yes"
 # TDP Url
 # TODO : use url or only the port ? 
 tds_front_tdp_url: "http://localhost:9999" # Change the port value if you change it

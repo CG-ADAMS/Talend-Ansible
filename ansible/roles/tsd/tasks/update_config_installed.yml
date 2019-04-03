@@ -1,19 +1,17 @@
 ---
 # This script used for updating current application parameters (first install & upgrade)
 # It can be run just after the installation or after some time (re-configuration)
-# Some parameters cannot be re-configured (installation path, user, group, tomcat deployment, tomcat port, systemd status)
-# All other parameters must be reconfigured here
 
 #####
 # Set the path to the tomcat config location of TSD
 #####
 - name: Set tsd_config_location when talend tomcat is used
-  when: app_use_talend_tomcat == 'yes'
+  when: app_use_talend_tomcat == 'yes' or (app_use_talend_tomcat == 'no' and app_tomcat_mode == 'shared')
   set_fact:
-    tsd_config_location: "{{ install_prefix }}/dictionary-service/tomcat/conf/data-quality.properties"
+    tsd_config_location: "{{ install_prefix }}/{{ rpm_folder }}/tomcat/conf/data-quality.properties"
 
 - name: Set tsd_config_location when customer tomcat is used
-  when: app_use_talend_tomcat == 'no'
+  when: app_use_talend_tomcat == 'no' and app_tomcat_mode == 'direct'
   set_fact:
     tsd_config_location: "{{ app_tomcat_home }}/conf/data-quality.properties"
 

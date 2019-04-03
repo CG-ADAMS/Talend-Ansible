@@ -26,5 +26,8 @@
 # Update configuration
 - import_tasks: update_config_installed.yml
 
+# Import semantic dictionary
+- import_tasks: import_semantic_dictionary.yml
+
 # Starting systemd service
 - include_tasks: ../../common/tasks/start_service.yml

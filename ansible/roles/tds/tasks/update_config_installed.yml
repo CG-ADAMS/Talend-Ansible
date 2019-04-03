@@ -1,19 +1,17 @@
 ---
 # This script used for updating current application parameters (first install & upgrade)
 # It can be run just after the installation or after some time (re-configuration)
-# Some parameters cannot be re-configured (installation path, user, group, tomcat deployment, tomcat port, systemd status)
-# All other parameters must be reconfigured here
 
 #####
 # Set the path to the tomcat config location of TDS
 #####
 - name: Set tds_config_location when talend tomcat is used
-  when: app_use_talend_tomcat == 'yes'
+  when: app_use_talend_tomcat == 'yes' or (app_use_talend_tomcat == 'no' and app_tomcat_mode == 'shared')
   set_fact:
-    tds_config_location: "{{ install_prefix }}/tds/tomcat/conf/data-stewardship.properties"
+    tds_config_location: "{{ install_prefix }}/{{ rpm_folder }}/tomcat/conf/data-stewardship.properties"
 
 - name: Set tds_config_location when customer tomcat is used
-  when: app_use_talend_tomcat == 'no'
+  when: app_use_talend_tomcat == 'no' and app_tomcat_mode == 'direct'
   set_fact:
     tds_config_location: "{{ app_tomcat_home }}/conf/data-stewardship.properties"
 
@@ -145,33 +143,35 @@
     
 
 # Activate semantic or not
-- name: Activate semantic
-  when: tds_use_semantic == "yes"
-  replace:
-    path: "{{ tds_config_location }}"
-    regexp:  '^#semanticservice\.url='
-    replace: "semanticservice.url="
+# TODO : to be delete ?
+# - name: Activate semantic
+#   when: tds_use_semantic_dictionary == "yes"
+#   replace:
+#     path: "{{ tds_config_location }}"
+#     regexp:  '^#semanticservice\.url='
+#     replace: "semanticservice.url="
 
 # TODO : If we only need to change the port (see TODO in defaults/main.yaml)
 # - name: Change semantic port
-#   when: tds_use_semantic == "yes"
+#   when: tds_use_semantic_dictionary == "yes"
 #   replace:
 #     path: "{{ tds_config_location }}"
 #     regexp:  '^(semanticservice\.url=.*:)[0-9]{2,5}(/.*)$'
 #     replace: '\g<1>{{ tds_semantic_port }}\g<2>'
 
-- name: Update semantic url
+- name: Activate semantic dictionary
+  when: tds_use_semantic_dictionary == "yes"
   replace:
     path: "{{ tds_config_location }}"
     regexp:  '^semanticservice\.url=.*'
-    replace: 'semanticservice.url={{ tds_semantic_url }}'
+    replace: 'semanticservice.url={{ tds_semantic_dictionary_url }}'
 
-- name: Deactivate semantic
-  when: tds_use_semantic == "no"
+- name: Deactivate semantic dictionary
+  when: tds_use_semantic_dictionary == "no"
   replace:
     path: "{{ tds_config_location }}"
-    regexp:  '^semanticservice\.url='
-    replace: "#semanticservice.url="
+    regexp:  '^semanticservice\.url=.*'
+    replace: "semanticservice.url="
 
 
 # Active switch to TDP or not

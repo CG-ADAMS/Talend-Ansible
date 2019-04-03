@@ -21,7 +21,7 @@ Parameter                             | First Install Only | Description        
 `app_tomcat_port`      |Yes|Port of Tomcat                                          | 8187
 `app_tomcat_home`      |Yes|Path to Tomcat home (only if you want to use a custom tomcat - app_use_talend_tomcat = no)| /opt/tomcat
 `app_tomcat_mode`      |Yes|Tomcat mode : "direct" or "shared" (only if you want to use a custom tomcat - app_use_talend_tomcat = no) | direct
-`app_tomcat_setup`     |Yes|TODO : to be confirmed                                  | no
+`app_tomcat_setup`     |Yes|Let RPM to update customer's tomcat configuration like ports (only if you want to use a custom tomcat - app_use_talend_tomcat = no) | no
 `tsd_kafka_host`       |No |Hostname where Kafka broker is installed                | localhost
 `tsd_kafka_port`       |No |Port of Kafka broker                                    | 9092
 `tsd_zookeeper_host`   |No |Hostname where Zookeeper is installed                   | localhost
