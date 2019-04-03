@@ -157,3 +157,11 @@
     path: "{{ tds_config_location }}"
     regexp:  '^tds\.front\.tdpUrl=.*'
     replace: "#tds.front.tdpUrl="
+
+# Set the language
+- name: Update language value (locale)
+  replace:
+    path: "{{ tds_config_location }}"
+    regexp:  '^tds\.locale=.*'
+    replace: 'tds.locale={{ tds_language }}'
+    

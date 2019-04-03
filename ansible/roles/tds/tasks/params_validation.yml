@@ -21,6 +21,7 @@
     - { name: 'tds_security_oidc_user_auth_url', value: "{{ tds_security_oidc_user_auth_url }}"}
     - { name: 'tds_oidc_id', value: "{{ tds_oidc_id }}"}
     - { name: 'tds_oidc_secret', value: "{{ tds_oidc_secret }}"}
+    - { name: 'tds_language', value: "{{ tds_language }}"}
 
 
 # verify flag yes/no have a correct value and are non empty
@@ -72,3 +73,10 @@
   fail:
     msg: Please, don't use value "duser" and set a stong password for tds_mongo_password
   when: tds_mongo_password == "duser"
+
+
+# Verify if the value for the language is correct
+- name: Show error about wrong value for parameter tds_language, not in the list
+  fail:
+    msg: "{{ app_name }} - wrong value for parameter 'tds_language', must be in the following list : en-US or fr-FR or ja-JP or zh-CN"
+  when: tds_language not in ["en-US","fr-FR","ja-JP","zh-CN"]

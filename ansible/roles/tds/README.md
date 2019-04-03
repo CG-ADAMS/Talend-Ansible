@@ -38,6 +38,7 @@ Parameter                             | First Install Only | Description        
 `tds_semantic_dictionary_url` |No |URL of Talend Semantic Dictionary                | <http://localhost:8187/>
 `tds_use_tdp_switch`   |No |Enable Talend Data Preparation  app switch : "yes" (only if you have a licence) or "no" | no
 `tds_front_tdp_url`    |No |URL of Talend Data Preparation                          | <http://localhost:9999>
+`tds_language`         |No |Set the language. Value could be : en-US or fr-FR or ja-JP or zh-CN | en-US
 
 Dependencies
 ------------

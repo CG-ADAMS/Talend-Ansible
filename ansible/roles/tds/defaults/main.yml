@@ -76,3 +76,9 @@ tds_semantic_dictionary_url: "http://localhost:8187/"
 tds_use_tdp_switch: "yes"
 # TDP Url
 tds_front_tdp_url: "http://localhost:9999" # Change the port value if you change it
+
+#####
+# Misc
+#####
+# Language of TDS. See README for the list of possible values
+tds_language: "en-US"
