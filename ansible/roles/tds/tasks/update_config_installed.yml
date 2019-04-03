@@ -19,21 +19,6 @@
 #####
 # Update TDS configuration
 #####
-# Tomcat
-# TODO : see if it's posssible
-# - name: Update tomcat port
-#   when: app_use_talend_tomcat == 'yes'
-#   replace:
-#     path: "{{ tds_config_location }}"
-#     regexp:  "{{ item }}"
-#     replace: '\g<1>{{ app_tomcat_port }}\g<2>'
-#   with_items:
-#       - '^(frontend\.url=.*:)[0-9]{2,5}(/.*)$'
-#       - '^(backend\.url=.*:)[0-9]{2,5}(/.*)$'
-#       - '^(schemaservice\.url=.*:)[0-9]{2,5}(/.*)$'
-#       - '^(historyservice\.url=.*:)[0-9]{2,5}(/.*)$'
-
-
 # Kafka
 - name: Update kafka broker
   replace:
@@ -143,22 +128,6 @@
     
 
 # Activate semantic or not
-# TODO : to be delete ?
-# - name: Activate semantic
-#   when: tds_use_semantic_dictionary == "yes"
-#   replace:
-#     path: "{{ tds_config_location }}"
-#     regexp:  '^#semanticservice\.url='
-#     replace: "semanticservice.url="
-
-# TODO : If we only need to change the port (see TODO in defaults/main.yaml)
-# - name: Change semantic port
-#   when: tds_use_semantic_dictionary == "yes"
-#   replace:
-#     path: "{{ tds_config_location }}"
-#     regexp:  '^(semanticservice\.url=.*:)[0-9]{2,5}(/.*)$'
-#     replace: '\g<1>{{ tds_semantic_port }}\g<2>'
-
 - name: Activate semantic dictionary
   when: tds_use_semantic_dictionary == "yes"
   replace:

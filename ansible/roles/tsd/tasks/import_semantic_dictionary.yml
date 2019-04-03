@@ -25,7 +25,6 @@
 #####
 # Launch import script
 #####
-# TODO : think how to check it was the first installation ?
 - name: "Import semantic dictionary to mongo (only first install)"
   when: rpm_is_installed.stdout == ''
   command: "chdir={{ tsd_import_script_dir }} ./{{ tsd_import_script }}"
