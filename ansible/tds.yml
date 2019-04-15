@@ -1,0 +1,13 @@
+---
+- hosts: tds-group
+  remote_user: root
+  roles:
+    - java
+    - talend-repo
+    - tomcat
+    - iam
+    - kafka
+    - mongodb
+    - tac
+    - tsd
+    - tds

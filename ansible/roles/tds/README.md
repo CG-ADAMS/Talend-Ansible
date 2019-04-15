@@ -1,38 +1,83 @@
-Role Name
+TDS
 =========
 
-A brief description of the role goes here.
+This role have the objective to deploy the Talend Data StewardShip application.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+An access to the Talend RPM repository.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following table lists the configurable parameters for TDS playbook and their default values.
+The ones flagged with "First Install Only" to yes can be change only at the initial installation. You can't change them after (during an update).
+
+Parameter                             | First Install Only | Description                                      | Default
+--------------------------------------|--------------------|--------------------------------------------------|--------------------------------
+`app_install_systemd`  |Yes|Installation of the service in systemd : "yes" or "no"  | yes
+`app_use_talend_tomcat`|Yes|Use Talend Tomcat : "yes" or "no".                      | yes
+`app_tomcat_port`      |Yes|Port of Tomcat                                          | 19999
+`app_tomcat_home`      |Yes|Path to Tomcat home (only if you want to use a custom tomcat - app_use_talend_tomcat = no)| /opt/tomcat
+`app_tomcat_mode`      |Yes|Tomcat mode : "direct" or "shared" (only if you want to use a custom tomcat - app_use_talend_tomcat = no) | direct
+`app_tomcat_setup`     |Yes|Let RPM to update customer's tomcat configuration like ports (only if you want to use a custom tomcat - app_use_talend_tomcat = no) | no
+`tds_kafka_host`       |No |Hostname where Kafka broker is installed                | localhost
+`tds_kafka_port`       |No |Port of Kafka broker                                    | 9092
+`tds_mongo_host`       |No |Hostname where MongoDB is installed                     | localhost
+`tds_mongo_port`       |No |Port of MongoDB                                         | 27017
+`tds_mongo_database`   |No |Name of the TDS MongoDB database                        | tds
+`tds_mongo_username`   |No |Username of the TDS MongoDB database                    | tds-user
+`tds_mongo_password`   |No |Password of the TDS MongoDB database. You can't use the default value for security things. Please change it        | duser
+`tds_security_scim_url`|No |URL to your Talend Identity and Access Management SCIM  | <http://localhost:9080/scim>
+`tds_security_oidc_url`|No |URL to your Talend Identity and Access Management       | <http://localhost:9080/oidc>
+`tds_security_oidc_user_auth_url` |No|URL to your Talend Identity and Access Management User Authentication | <http://localhost:9080/oidc>
+`tds_oidc_id`          |No |Talend Identity and Access Management OIDC client identifier | tl6K6ac7tSE-LQ
+`tds_oidc_secret`      |No |Talend Identity and Access Management OIDC password     | sLbyFKTzM8F0dTL10mHd3A
+`tds_use_semantic_dictionary` |No |Enable link with Talend Semantic Dictionary : "yes" (only if you have a licence) or "no" | yes
+`tds_semantic_dictionary_url` |No |URL of Talend Semantic Dictionary                | <http://localhost:8187/>
+`tds_use_tdp_switch`   |No |Enable Talend Data Preparation  app switch : "yes" (only if you have a licence) or "no" | no
+`tds_front_tdp_url`    |No |URL of Talend Data Preparation                          | <http://localhost:9999>
+`tds_language`         |No |Set the language. Value could be : en-US or fr-FR or ja-JP or zh-CN | en-US
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+List of dependancies (playbooks) :
+
+- Java
+- Tomcat
+- IAM
+- TAC
+- MongoDB
+- Kafka
+- TSD (Talend Semantic Dictionary - optional, only in if you have the licence of this module)
+- TDP (Talend Data Preparation - optional, only in if you have the licence of this module and you want to use the app switcher on the TDS interface)
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Example of how to use playbook (you can remove tsd if you don't have the licence) :
 
-    - hosts: servers
+    - hosts: tds-group
+      remote_user: root
       roles:
-         - { role: username.rolename, x: 42 }
+        - java
+        - talend-repo
+        - tomcat
+        - iam
+        - kafka
+        - mongodb
+        - tac
+        - tsd
+        - tds
 
 License
 -------
 
-TBD
+Apache License 2.0
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Talend SA
